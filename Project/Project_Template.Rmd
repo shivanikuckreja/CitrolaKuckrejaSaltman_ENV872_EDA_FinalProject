@@ -30,6 +30,7 @@ mainfont: Times New Roman
 
 # Load your datasets
 
+Original_ECOTOX_CSV <- read.csv("../ECOTOX_Neonicotinoids_Insects_raw.csv", stringsAsFactors = TRUE)
 ```
 
 
