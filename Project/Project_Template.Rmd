@@ -76,6 +76,13 @@ ECOTOX_Neonicotinoids_Insects | EPA Data observing affects of chemicals and expo
 
 # Exploratory Analysis 
 
+```{r}
+
+dim(Original_ECOTOX_CSV)
+colnames(Original_ECOTOX_CSV)
+summary(Original_ECOTOX_CSV)
+
+```
 
 
 \newpage
