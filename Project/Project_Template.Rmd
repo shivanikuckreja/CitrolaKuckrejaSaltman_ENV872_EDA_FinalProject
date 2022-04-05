@@ -26,13 +26,22 @@ mainfont: Times New Roman
 getwd()
 # Load your packages
 
+library(tidyverse)
+library(lubridate)
+library(knitr)
+library(ggplot2)
+library(RColorBrewer)
 
 
 # Set your ggplot theme
+mytheme <- theme_classic() +
+  theme(axis.text = element_text(color = "black"), 
+        legend.position = "top")
+theme_set(mytheme)
 
 # Load your datasets
 
-Original_ECOTOX_CSV <- read.csv("../ECOTOX_Neonicotinoids_Insects_raw.csv", stringsAsFactors = TRUE)
+Original_ECOTOX_CSV <- read.csv("../Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.csv", stringsAsFactors = TRUE)
 ```
 
 
