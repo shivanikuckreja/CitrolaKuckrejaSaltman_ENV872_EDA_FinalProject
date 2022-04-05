@@ -23,8 +23,10 @@ mainfont: Times New Roman
 
 ```{r setup, include=FALSE}
 # Set your working directory
-
+getwd()
 # Load your packages
+
+
 
 # Set your ggplot theme
 
