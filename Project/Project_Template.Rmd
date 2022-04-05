@@ -60,6 +60,15 @@ Questions:
 
 # Dataset Information
 
+Data Source: The dataset was pulled from a repository created for Environmental Data Analytics at Duke University in 2020. The data collected is from several EPA studies on neonicotinoids and their effects on insects. The data we will be analyzing is the type of chemical administered, how it was administered, and how both of these variables affected insects. 
+
+In the wrangling process, we selected the relevant information to our topic. This includes the chemical type, insect species, lifestage and age of the species, exposure type and the effect of the exposure.
+
+```{r include=FALSE}
+Processed1_Filter <- Original_ECOTOX_CSV %>%
+  select(Chemical.Name, Species.Common.Name, Organism.Lifestage, Organism.Age, Exposure.Type, Effect, Effect.Measurement)
+```
+
 
 
 \newpage
