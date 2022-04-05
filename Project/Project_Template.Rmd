@@ -69,8 +69,9 @@ Processed1_Filter <- Original_ECOTOX_CSV %>%
   select(Chemical.Name, Species.Common.Name, Organism.Lifestage, Organism.Age, Exposure.Type, Effect, Effect.Measurement)
 ```
 
-
-
+Dataset | Summary Structure
+------- | ---------
+ECOTOX_Neonicotinoids_Insects | EPA Data observing affects of chemicals and exposure types on insects
 \newpage
 
 # Exploratory Analysis 

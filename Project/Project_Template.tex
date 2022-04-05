@@ -55,6 +55,16 @@
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=2.54cm]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -98,7 +108,7 @@ honeybees while eliminating pests. The goal of our research is to
 determine potential treatment methods that reduce pests while having
 little to no impact on pollinators.}
 
-Questions
+Questions:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -106,7 +116,7 @@ Questions
   \emph{Is there an exposure type that has less impact on bees than
   non-bee insects?}
 \item
-  \emph{Are thre chemicals that have a high mortality rate for non-bee
+  \emph{Are there chemicals that have a high mortality rate for non-bee
   insects and low rate for bees?}
 \end{enumerate}
 
@@ -114,6 +124,33 @@ Questions
 
 \hypertarget{dataset-information}{%
 \section{Dataset Information}\label{dataset-information}}
+
+Data Source: The dataset was pulled from a repository created for
+Environmental Data Analytics at Duke University in 2020. The data
+collected is from several EPA studies on neonicotinoids and their
+effects on insects. The data we will be analyzing is the type of
+chemical administered, how it was administered, and how both of these
+variables affected insects.
+
+In the wrangling process, we selected the relevant information to our
+topic. This includes the chemical type, insect species, lifestage and
+age of the species, exposure type and the effect of the exposure.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.44}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.56}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedright
+Dataset
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Summary Structure
+\end{minipage} \\
+\midrule
+\endhead
+ECOTOX\_Neonicotinoids\_Insects & EPA Data observing affects of
+chemicals and exposure types on insects \\
+\bottomrule
+\end{longtable}
 
 \newpage
 
@@ -130,10 +167,10 @@ Questions
 on bees than non-bee
 insects?}\label{question-1-is-there-an-exposure-type-that-has-less-impact-on-bees-than-non-bee-insects}}
 
-\hypertarget{question-2-are-thre-chemicals-that-have-a-high-mortality-rate-for-non-bee-insects-and-low-rate-for-bees}{%
-\subsection{Question 2: Are thre chemicals that have a high mortality
+\hypertarget{question-2-are-there-chemicals-that-have-a-high-mortality-rate-for-non-bee-insects-and-low-rate-for-bees}{%
+\subsection{Question 2: Are there chemicals that have a high mortality
 rate for non-bee insects and low rate for
-bees?}\label{question-2-are-thre-chemicals-that-have-a-high-mortality-rate-for-non-bee-insects-and-low-rate-for-bees}}
+bees?}\label{question-2-are-there-chemicals-that-have-a-high-mortality-rate-for-non-bee-insects-and-low-rate-for-bees}}
 
 \newpage
 
