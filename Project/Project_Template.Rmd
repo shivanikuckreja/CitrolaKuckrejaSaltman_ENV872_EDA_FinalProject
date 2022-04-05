@@ -5,9 +5,9 @@ output:
     fig_caption: yes
     number_sections: yes
 geometry: margin=2.54cm
-title: "Neonictides"
-subtitle: "Web address for GitHub repository"
-author: "Name"
+title: "Effective Pest Treament That Protects Pollinators"
+subtitle: "https://github.com/shivanikuckreja/CitrolaKuckrejaSaltman_ENV872_EDA_FinalProject/tree/main/Project"
+author: "Sam Saltman, Shivani Kuckreja, Jessica Citrola"
 fontsize: 12pt
 mainfont: Times New Roman
 
@@ -49,9 +49,11 @@ Original_ECOTOX_CSV <- read.csv("../Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.c
 
 **Pollination is a critical component of agriculture. Honeybees are important pollinators. Our research looks to see if there are exposure methods and chemicals that do not cause significant harm to honeybees while eliminating pests. The goal of our research is to determine potential treatment methods that reduce pests while having little to no impact on pollinators.**
 
-Questions
+Questions:
+
 1.   _Is there an exposure type that has less impact on bees than non-bee insects?_
-2.   _Are thre chemicals that have a high mortality rate for non-bee insects and low rate for bees?_
+
+2.   _Are there chemicals that have a high mortality rate for non-bee insects and low rate for bees?_
   
 
 \newpage
@@ -72,9 +74,9 @@ Questions
 
 
 
-## Question 1: <insert specific question here and add additional subsections for additional questions below, if needed>
+## Question 1: Is there an exposure type that has less impact on bees than non-bee insects?
 
-## Question 2: 
+## Question 2: Are there chemicals that have a high mortality rate for non-bee insects and low rate for bees?
 
 
 
