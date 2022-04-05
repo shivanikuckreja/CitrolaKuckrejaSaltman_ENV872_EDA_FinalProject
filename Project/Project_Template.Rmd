@@ -69,9 +69,15 @@ Processed1_Filter <- Original_ECOTOX_CSV %>%
   select(Chemical.Name, Species.Common.Name, Organism.Lifestage, Organism.Age, Exposure.Type, Effect, Effect.Measurement)
 ```
 
-Dataset | Summary Structure
+Detail | Description
 ------- | ---------
-ECOTOX_Neonicotinoids_Insects | EPA Data observing affects of chemicals and exposure types on insects
+Data Source | EPA ECOTOX Knowledgebase
+------- | ---------
+Retrieved From | https://cfpub.epa.gov/ecotox/help.cfm
+------- | ---------
+Variables Used |Chemical Name, Species Common Name, Organism Lifestage, Organism Age, Exposure Type, Effect, Effect Measurement
+------- | ---------
+Date Range | 1982-2019
 \newpage
 
 # Exploratory Analysis 

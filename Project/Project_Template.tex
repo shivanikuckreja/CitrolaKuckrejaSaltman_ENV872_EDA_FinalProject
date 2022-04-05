@@ -55,6 +55,46 @@
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=2.54cm]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
@@ -141,14 +181,20 @@ age of the species, exposure type and the effect of the exposure.
   >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.56}}@{}}
 \toprule
 \begin{minipage}[b]{\linewidth}\raggedright
-Dataset
+Detail
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Summary Structure
+Description
 \end{minipage} \\
 \midrule
 \endhead
-ECOTOX\_Neonicotinoids\_Insects & EPA Data observing affects of
-chemicals and exposure types on insects \\
+Data Source & EPA ECOTOX Knowledgebase \\
+------- & --------- \\
+Retrieved From & \url{https://cfpub.epa.gov/ecotox/help.cfm} \\
+------- & --------- \\
+Variables Used & Chemical Name, Species Common Name, Organism Lifestage,
+Organism Age, Exposure Type, Effect, Effect Measurement \\
+------- & --------- \\
+Date Range & 1982-2019 \\
 \bottomrule
 \end{longtable}
 
@@ -156,6 +202,193 @@ chemicals and exposure types on insects \\
 
 \hypertarget{exploratory-analysis}{%
 \section{Exploratory Analysis}\label{exploratory-analysis}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dim}\NormalTok{(Original\_ECOTOX\_CSV)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4623   30
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colnames}\NormalTok{(Original\_ECOTOX\_CSV)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "CAS.Number"                       "Chemical.Name"                   
+##  [3] "Chemical.Grade"                   "Chemical.Analysis.Method"        
+##  [5] "Chemical.Purity"                  "Species.Scientific.Name"         
+##  [7] "Species.Common.Name"              "Species.Group"                   
+##  [9] "Organism.Lifestage"               "Organism.Age"                    
+## [11] "Organism.Age.Units"               "Exposure.Type"                   
+## [13] "Media.Type"                       "Test.Location"                   
+## [15] "Number.of.Doses"                  "Conc.1.Type..Author."            
+## [17] "Conc.1..Author."                  "Conc.1.Units..Author."           
+## [19] "Effect"                           "Effect.Measurement"              
+## [21] "Endpoint"                         "Response.Site"                   
+## [23] "Observed.Duration..Days."         "Observed.Duration.Units..Days."  
+## [25] "Author"                           "Reference.Number"                
+## [27] "Title"                            "Source"                          
+## [29] "Publication.Year"                 "Summary.of.Additional.Parameters"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(Original\_ECOTOX\_CSV)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    CAS.Number       
+##  Min.   : 58842209  
+##  1st Qu.:138261413  
+##  Median :138261413  
+##  Mean   :147651982  
+##  3rd Qu.:153719234  
+##  Max.   :210880925  
+##                     
+##                                                                                 Chemical.Name 
+##  (2E)-1-[(6-Chloro-3-pyridinyl)methyl]-N-nitro-2-imidazolidinimine                     :2658  
+##  3-[(2-Chloro-5-thiazolyl)methyl]tetrahydro-5-methyl-N-nitro-4H-1,3,5-oxadiazin-4-imine: 686  
+##  [C(E)]-N-[(2-Chloro-5-thiazolyl)methyl]-N'-methyl-N''-nitroguanidine                  : 452  
+##  (1E)-N-[(6-Chloro-3-pyridinyl)methyl]-N'-cyano-N-methylethanimidamide                 : 420  
+##  N''-Methyl-N-nitro-N'-[(tetrahydro-3-furanyl)methyl]guanidine                         : 218  
+##  [N(Z)]-N-[3-[(6-Chloro-3-pyridinyl)methyl]-2-thiazolidinylidene]cyanamide             : 128  
+##  (Other)                                                                               :  61  
+##                                                    Chemical.Grade
+##  Not reported                                             :3989  
+##  Technical grade, technical product, technical formulation: 422  
+##  Pestanal grade                                           :  93  
+##  Not coded                                                :  53  
+##  Commercial grade                                         :  27  
+##  Analytical grade                                         :  15  
+##  (Other)                                                  :  24  
+##                                                  Chemical.Analysis.Method
+##  Measured                                                    : 230       
+##  Not coded                                                   :  51       
+##  Not reported                                                :   5       
+##  Unmeasured                                                  :4321       
+##  Unmeasured values (some measured values reported in article):  16       
+##                                                                          
+##                                                                          
+##  Chemical.Purity                  Species.Scientific.Name
+##  NR     :2502    Apis mellifera               : 667      
+##  25     : 244    Bombus terrestris            : 183      
+##  50     : 200    Apis mellifera ssp. carnica  : 152      
+##  20     : 189    Bombus impatiens             : 140      
+##  70     : 112    Apis mellifera ssp. ligustica: 113      
+##  75     :  89    Popillia japonica            :  94      
+##  (Other):1287    (Other)                      :3274      
+##             Species.Common.Name
+##  Honey Bee            : 667    
+##  Parasitic Wasp       : 285    
+##  Buff Tailed Bumblebee: 183    
+##  Carniolan Honey Bee  : 152    
+##  Bumble Bee           : 140    
+##  Italian Honeybee     : 113    
+##  (Other)              :3083    
+##                                                        Species.Group 
+##  Insects/Spiders                                              :3569  
+##  Insects/Spiders; Standard Test Species                       :  27  
+##  Insects/Spiders; Standard Test Species; U.S. Invasive Species: 667  
+##  Insects/Spiders; U.S. Invasive Species                       : 360  
+##                                                                      
+##                                                                      
+##                                                                      
+##     Organism.Lifestage  Organism.Age             Organism.Age.Units
+##  Not reported:2271     NR     :3851   Not reported        :3515    
+##  Adult       :1222     2      : 111   Day(s)              : 327    
+##  Larva       : 437     3      : 105   Instar              : 255    
+##  Multiple    : 285     <24    :  81   Hour(s)             : 241    
+##  Egg         : 128     4      :  81   Hours post-emergence:  99    
+##  Pupa        :  69     1      :  59   Year(s)             :  64    
+##  (Other)     : 211     (Other): 335   (Other)             : 122    
+##                     Exposure.Type         Media.Type  
+##  Environmental, unspecified:1599   No substrate:2934  
+##  Food                      :1124   Not reported: 663  
+##  Spray                     : 393   Natural soil: 393  
+##  Topical, general          : 254   Litter      : 264  
+##  Ground granular           : 249   Filter paper: 230  
+##  Hand spray                : 210   Not coded   :  51  
+##  (Other)                   : 794   (Other)     :  88  
+##               Test.Location  Number.of.Doses        Conc.1.Type..Author.
+##  Field artificial    :  96   2      :2441    Active ingredient:3161     
+##  Field natural       :1663   3      : 499    Formulation      :1420     
+##  Field undeterminable:   4   5      : 314    Not coded        :  42     
+##  Lab                 :2860   6      : 230                               
+##                              4      : 221                               
+##                              NR     : 217                               
+##                              (Other): 701                               
+##  Conc.1..Author. Conc.1.Units..Author.              Effect    
+##  0.37/  : 208    AI kg/ha  : 575       Population      :1803  
+##  10/    : 127    AI mg/L   : 298       Mortality       :1493  
+##  NR/    : 108    AI lb/acre: 277       Behavior        : 360  
+##  NR     :  94    AI g/ha   : 241       Feeding behavior: 255  
+##  1      :  82    ng/org    : 231       Reproduction    : 197  
+##  1023   :  80    ppm       : 180       Development     : 136  
+##  (Other):3924    (Other)   :2821       (Other)         : 379  
+##               Effect.Measurement    Endpoint                   Response.Site 
+##  Abundance             :1699     NOEL   :1816   Not reported          :4349  
+##  Mortality             :1294     LOEL   :1664   Midgut or midgut gland:  63  
+##  Survival              : 133     LC50   : 327   Not coded             :  51  
+##  Progeny counts/numbers: 120     LD50   : 274   Whole organism        :  41  
+##  Food consumption      : 103     NR     : 167   Hypopharyngeal gland  :  27  
+##  Emergence             :  98     NR-LETH:  86   Head                  :  23  
+##  (Other)               :1176     (Other): 289   (Other)               :  69  
+##  Observed.Duration..Days.       Observed.Duration.Units..Days.
+##  1      : 713             Day(s)               :4394          
+##  2      : 383             Emergence            :  70          
+##  NR     : 355             Growing season       :  48          
+##  7      : 207             Day(s) post-hatch    :  20          
+##  3      : 183             Day(s) post-emergence:  17          
+##  0.0417 : 133             Tiller stage         :  15          
+##  (Other):2649             (Other)              :  59          
+##                                                                            Author    
+##  Peck,D.C.                                                                    : 208  
+##  Frank,S.D.                                                                   : 100  
+##  El Hassani,A.K., M. Dacher, V. Gary, M. Lambin, M. Gauthier, and C. Armengaud:  96  
+##  Williamson,S.M., S.J. Willis, and G.A. Wright                                :  93  
+##  Laurino,D., A. Manino, A. Patetta, and M. Porporato                          :  88  
+##  Scholer,J., and V. Krischik                                                  :  82  
+##  (Other)                                                                      :3956  
+##  Reference.Number
+##  Min.   :   344  
+##  1st Qu.:108459  
+##  Median :165559  
+##  Mean   :142189  
+##  3rd Qu.:168998  
+##  Max.   :180410  
+##                  
+##                                                                                                                                         Title     
+##  Long-Term Effects of Imidacloprid on the Abundance of Surface- and Soil-Active Nontarget Fauna in Turf                                    : 200  
+##  Reduced Risk Insecticides to Control Scale Insects and Protect Natural Enemies in the Production and Maintenance of Urban Landscape Plants: 100  
+##  Effects of Sublethal Doses of Acetamiprid and Thiamethoxam on the Behavior of the Honeybee (Apis mellifera)                               :  96  
+##  Exposure to Neonicotinoids Influences the Motor Function of Adult Worker Honeybees                                                        :  93  
+##  Toxicity of Neonicotinoid Insecticides on Different Honey Bee Genotypes                                                                   :  88  
+##  Chronic Exposure of Imidacloprid and Clothianidin Reduce Queen Survival, Foraging, and Nectar Storing in Colonies of Bombus impatiens     :  82  
+##  (Other)                                                                                                                                   :3964  
+##                                            Source     Publication.Year
+##  Agric. For. Entomol.11(4): 405-419           : 200   Min.   :1982    
+##  Environ. Entomol.41(2): 377-386              : 100   1st Qu.:2005    
+##  Arch. Environ. Contam. Toxicol.54(4): 653-661:  96   Median :2010    
+##  Ecotoxicology23:1409-1418                    :  93   Mean   :2008    
+##  Bull. Insectol.66(1): 119-126                :  88   3rd Qu.:2013    
+##  PLoS One9(3): 14 p.                          :  82   Max.   :2019    
+##  (Other)                                      :3964                   
+##  Summary.of.Additional.Parameters                                                                                                                                                                                                                       
+##  Purity: \xca NR - NR | Organism Age: \xca NR - NR Not reported | Conc 1 (Author): \xca Active ingredient NR/ - NR/ AI kg/ha | Duration (Days): \xca NR - NR NR | Conc 2 (Author): \xca NR (NR - NR) NR | Conc 3 (Author): \xca NR (NR - NR) NR  : 389  
+##  Purity: \xca NR - NR | Organism Age: \xca NR - NR Not reported | Conc 1 (Author): \xca Active ingredient NR - NR AI lb/acre | Duration (Days): \xca NR - NR NR | Conc 2 (Author): \xca NR (NR - NR) NR | Conc 3 (Author): \xca NR (NR - NR) NR  : 138  
+##  Purity: \xca NR - NR | Organism Age: \xca NR - NR Not reported | Conc 1 (Author): \xca Active ingredient NR - NR AI kg/ha | Duration (Days): \xca NR - NR NR | Conc 2 (Author): \xca NR (NR - NR) NR | Conc 3 (Author): \xca NR (NR - NR) NR    : 136  
+##  Purity: \xca NR - NR | Organism Age: \xca NR - NR Not reported | Conc 1 (Author): \xca Active ingredient NR/ - NR/ AI lb/acre | Duration (Days): \xca NR - NR NR | Conc 2 (Author): \xca NR (NR - NR) NR | Conc 3 (Author): \xca NR (NR - NR) NR: 124  
+##  Purity: \xca NR - NR | Organism Age: \xca NR - NR Not reported | Conc 1 (Author): \xca Active ingredient NR - NR AI ng/org | Duration (Days): \xca NR - NR NR | Conc 2 (Author): \xca NR (NR - NR) NR | Conc 3 (Author): \xca NR (NR - NR) NR   :  94  
+##  Purity: \xca NR - NR | Organism Age: \xca NR - NR Not reported | Conc 1 (Author): \xca Formulation NR - NR ml/ha | Duration (Days): \xca NR - NR NR | Conc 2 (Author): \xca NR (NR - NR) NR | Conc 3 (Author): \xca NR (NR - NR) NR             :  80  
+##  (Other)                                                                                                                                                                                                                                         :3662
+\end{verbatim}
 
 \newpage
 
