@@ -67,7 +67,24 @@ In the wrangling process, we selected the relevant information to our topic. Thi
 
 ```{r echo=FALSE}
 Processed1_Filter <- Original_ECOTOX_CSV %>%
-  select(Chemical.Name, Species.Common.Name, Organism.Lifestage, Organism.Age, Exposure.Type, Effect, Effect.Measurement) 
+  select(CAS.Number, Chemical.Name, Species.Common.Name, Organism.Lifestage, Organism.Age, Exposure.Type, Effect, Effect.Measurement) 
+
+Processed1_Filter$CAS.Number <- as.factor(Processed1_Filter$CAS.Number)
+
+write.csv(Processed1_Filter, row.names = FALSE, file = "./Data/Processed/ProcessedForColumns")
+
+Mortality <- Processed1_Filter %>%
+  filter(Effect == "Mortality")
+
+ HoneyBeeMortalityExposureType <- Mortality %>%
+  filter(Species.Common.Name == "Honey Bee" | Species.Common.Name == "Buff Tailed Bumblebee" | Species.Common.Name == "Carniolan Honey Bee" | Species.Common.Name == "Bumble Bee" | Species.Common.Name == "Italian Honeybee" | Species.Common.Name == "European Dark Bee" | Species.Common.Name == "Buff-tailed Bumblebee" | Species.Common.Name =="Stingless Bee")
+ 
+ write.csv(HoneyBeeMortalityExposureType, row.names = FALSE, file = "./Data/Processed/BeeMortality")
+ 
+  NonBeeMortalityExposure <- Mortality %>%
+  filter(Species.Common.Name != "Honey Bee" | Species.Common.Name != "Buff Tailed Bumblebee" | Species.Common.Name != "Carniolan Honey Bee" | Species.Common.Name != "Bumble Bee" | Species.Common.Name != "Italian Honeybee" | Species.Common.Name != "European Dark Bee" | Species.Common.Name != "Buff-tailed Bumblebee" | Species.Common.Name !="Stingless Bee")
+  
+ write.csv(NonBeeMortalityExposure, row.names = FALSE, file = "./Data/Processed/NonBeeMortality")
 
 ```
 
@@ -84,34 +101,27 @@ Date Range | 1982-2019
 
 # Exploratory Analysis 
 
-```{r tab.cap = "Species List"}
-
-Mortality <- Processed1_Filter %>%
-  filter(Effect == "Mortality")
+```{r echo=FALSE, tab.cap = "Species List - Sample Number"}
 
 kable(summary(Mortality$Species.Common.Name), caption = "Species List")
 ```
 
 
 
-```{r fig.cap = "Bee Mortality"}
+```{r echo=FALSE,fig.cap = "Bee Mortality by Exposure Type"}
 
- HoneyBeeMortalityExposureType <- Mortality %>%
-  filter(Species.Common.Name == "Honey Bee" | Species.Common.Name == "Buff Tailed Bumblebee" | Species.Common.Name == "Carniolan Honey Bee" | Species.Common.Name == "Bumble Bee" | Species.Common.Name == "Italian Honeybee" | Species.Common.Name == "European Dark Bee" | Species.Common.Name == "Buff-tailed Bumblebee" | Species.Common.Name =="Stingless Bee")
 
  GGPlot_HoneyBee_Mortality_Exposure <- ggplot(HoneyBeeMortalityExposureType) +
    aes(x = Exposure.Type) +
    geom_bar() +
-   labs("Bee Mortality") +
+   xlab("Exposure Type") +
    ylab("Mortality Count") +
    theme(axis.text.x = element_text(angle = 90))
  print(GGPlot_HoneyBee_Mortality_Exposure)
  
 ```
 
-```{r fig.cap = "Non-bee Mortality"}
- NonBeeMortalityExposure <- Mortality %>%
-  filter(Species.Common.Name != "Honey Bee" | Species.Common.Name != "Buff Tailed Bumblebee" | Species.Common.Name != "Carniolan Honey Bee" | Species.Common.Name != "Bumble Bee" | Species.Common.Name != "Italian Honeybee" | Species.Common.Name != "European Dark Bee" | Species.Common.Name != "Buff-tailed Bumblebee" | Species.Common.Name !="Stingless Bee")
+```{r echo=FALSE, fig.cap = "Non-bee Mortality by Exposure Type"}
  
  GGPlot_NonBee_Mortality_Exposure <- ggplot(NonBeeMortalityExposure) +
    aes(x = Exposure.Type) +
@@ -122,6 +132,28 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List")
  print(GGPlot_HoneyBee_Mortality_Exposure)
 ```
 
+```{r echo=FALSE, fig.cap = "Bee Mortality by Chemical"}
+ 
+GGPlot_HoneyBee_Mortality_Chemical <- ggplot(HoneyBeeMortalityExposureType) +
+   aes(x = CAS.Number) +
+   geom_bar() +
+   xlab("Chemical") +
+   ylab("Mortality Count") +
+   theme(axis.text.x = element_text(angle = 90))
+ print( GGPlot_HoneyBee_Mortality_Chemical)
+```
+
+
+```{r echo=FALSE, fig.cap = "Non-bee Mortality by Chemical"}
+ GGPlot_NonBee_Mortality_Chemical <- ggplot(NonBeeMortalityExposure) +
+   aes(x = CAS.Number) +
+   geom_bar() +
+   ylab("Mortality Count") +
+   xlab("Chemical") +
+   theme(axis.text.x = element_text(angle = 90))
+ print(GGPlot_NonBee_Mortality_Chemical)
+```
+
 \newpage
 
 # Analysis
@@ -129,6 +161,14 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List")
 
 
 ## Question 1: Is there an exposure type that has less impact on bees than non-bee insects?
+
+```{r}
+
+```
+
+
+
+
 
 ## Question 2: Are there chemicals that have a high mortality rate for non-bee insects and low rate for bees?
 
