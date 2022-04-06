@@ -10,7 +10,8 @@ subtitle: "https://github.com/shivanikuckreja/CitrolaKuckrejaSaltman_ENV872_EDA_
 author: "Sam Saltman, Shivani Kuckreja, Jessica Citrola"
 fontsize: 12pt
 mainfont: Times New Roman
-
+editor_options: 
+  chunk_output_type: console
 ---
 
 \newpage
@@ -39,9 +40,9 @@ mytheme <- theme_classic() +
         legend.position = "top")
 theme_set(mytheme)
 
-# Load your datasets
+# Load your datasets 
 
-Original_ECOTOX_CSV <- read.csv("../Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.csv", stringsAsFactors = TRUE)
+Original_ECOTOX_CSV <- read.csv("./Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.csv", stringsAsFactors = TRUE)
 ```
 
 
@@ -64,9 +65,10 @@ Data Source: The dataset was pulled from a repository created for Environmental 
 
 In the wrangling process, we selected the relevant information to our topic. This includes the chemical type, insect species, lifestage and age of the species, exposure type and the effect of the exposure.
 
-```{r include=FALSE}
+```{r echo=FALSE}
 Processed1_Filter <- Original_ECOTOX_CSV %>%
-  select(Chemical.Name, Species.Common.Name, Organism.Lifestage, Organism.Age, Exposure.Type, Effect, Effect.Measurement)
+  select(Chemical.Name, Species.Common.Name, Organism.Lifestage, Organism.Age, Exposure.Type, Effect, Effect.Measurement) 
+
 ```
 
 Detail | Description
@@ -82,14 +84,43 @@ Date Range | 1982-2019
 
 # Exploratory Analysis 
 
-```{r}
+```{r tab.cap = "Species List"}
 
-dim(Original_ECOTOX_CSV)
-colnames(Original_ECOTOX_CSV)
-summary(Original_ECOTOX_CSV)
+Mortality <- Processed1_Filter %>%
+  filter(Effect == "Mortality")
 
+kable(summary(Mortality$Species.Common.Name), caption = "Species List")
 ```
 
+
+
+```{r fig.cap = "Bee Mortality"}
+
+ HoneyBeeMortalityExposureType <- Mortality %>%
+  filter(Species.Common.Name == "Honey Bee" | Species.Common.Name == "Buff Tailed Bumblebee" | Species.Common.Name == "Carniolan Honey Bee" | Species.Common.Name == "Bumble Bee" | Species.Common.Name == "Italian Honeybee" | Species.Common.Name == "European Dark Bee" | Species.Common.Name == "Buff-tailed Bumblebee" | Species.Common.Name =="Stingless Bee")
+
+ GGPlot_HoneyBee_Mortality_Exposure <- ggplot(HoneyBeeMortalityExposureType) +
+   aes(x = Exposure.Type) +
+   geom_bar() +
+   labs("Bee Mortality") +
+   ylab("Mortality Count") +
+   theme(axis.text.x = element_text(angle = 90))
+ print(GGPlot_HoneyBee_Mortality_Exposure)
+ 
+```
+
+```{r fig.cap = "Non-bee Mortality"}
+ NonBeeMortalityExposure <- Mortality %>%
+  filter(Species.Common.Name != "Honey Bee" | Species.Common.Name != "Buff Tailed Bumblebee" | Species.Common.Name != "Carniolan Honey Bee" | Species.Common.Name != "Bumble Bee" | Species.Common.Name != "Italian Honeybee" | Species.Common.Name != "European Dark Bee" | Species.Common.Name != "Buff-tailed Bumblebee" | Species.Common.Name !="Stingless Bee")
+ 
+ GGPlot_NonBee_Mortality_Exposure <- ggplot(NonBeeMortalityExposure) +
+   aes(x = Exposure.Type) +
+   geom_bar() +
+   ylab("Mortality Count") +
+   xlab("Exposure Type") +
+   theme(axis.text.x = element_text(angle = 90))
+ print(GGPlot_HoneyBee_Mortality_Exposure)
+```
 
 \newpage
 
