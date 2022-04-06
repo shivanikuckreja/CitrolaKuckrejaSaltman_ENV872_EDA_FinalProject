@@ -103,7 +103,7 @@ Date Range | 1982-2019
 
 ```{r echo=FALSE, tab.cap = "Species List - Sample Number"}
 
-kable(summary(Mortality$Species.Common.Name), caption = "Species List")
+kable(summary(Mortality$Species.Common.Name), caption = "Species List - Sample Number")
 ```
 
 
