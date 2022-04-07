@@ -5,12 +5,13 @@ output:
     fig_caption: yes
     number_sections: yes
 geometry: margin=2.54cm
-title: "Neonictides"
-subtitle: "Web address for GitHub repository"
-author: "Name"
+title: "Effective Pest Treament That Protects Pollinators"
+subtitle: "https://github.com/shivanikuckreja/CitrolaKuckrejaSaltman_ENV872_EDA_FinalProject/tree/main/Project"
+author: "Sam Saltman, Shivani Kuckreja, Jessica Citrola"
 fontsize: 12pt
 mainfont: Times New Roman
-
+editor_options: 
+  chunk_output_type: console
 ---
 
 \newpage
@@ -23,32 +24,135 @@ mainfont: Times New Roman
 
 ```{r setup, include=FALSE}
 # Set your working directory
-
+getwd()
 # Load your packages
 
+library(tidyverse)
+library(lubridate)
+library(knitr)
+library(ggplot2)
+library(RColorBrewer)
+
+
 # Set your ggplot theme
+mytheme <- theme_classic() +
+  theme(axis.text = element_text(color = "black"), 
+        legend.position = "top")
+theme_set(mytheme)
 
-# Load your datasets
+# Load your datasets 
 
-Original_ECOTOX_CSV <- read.csv("../ECOTOX_Neonicotinoids_Insects_raw.csv", stringsAsFactors = TRUE)
+Original_ECOTOX_CSV <- read.csv("./Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.csv", stringsAsFactors = TRUE)
 ```
 
 
 # Rationale and Research Questions
 
+**Pollination is a critical component of agriculture. Honeybees are important pollinators. Our research looks to see if there are exposure methods and chemicals that do not cause significant harm to honeybees while eliminating pests. The goal of our research is to determine potential treatment methods that reduce pests while having little to no impact on pollinators.**
 
+Questions:
+
+1.   _Is there an exposure type that has less impact on bees than non-bee insects?_
+
+2.   _Are there chemicals that have a high mortality rate for non-bee insects and low rate for bees?_
+  
 
 \newpage
 
 # Dataset Information
 
+Data Source: The dataset was pulled from a repository created for Environmental Data Analytics at Duke University in 2020. The data collected is from several EPA studies on neonicotinoids and their effects on insects. The data we will be analyzing is the type of chemical administered, how it was administered, and how both of these variables affected insects. 
 
+In the wrangling process, we selected the relevant information to our topic. This includes the chemical type, insect species, lifestage and age of the species, exposure type and the effect of the exposure.
 
+```{r echo=FALSE}
+Processed1_Filter <- Original_ECOTOX_CSV %>%
+  select(CAS.Number, Chemical.Name, Species.Common.Name, Organism.Lifestage, Organism.Age, Exposure.Type, Effect, Effect.Measurement) 
+
+Processed1_Filter$CAS.Number <- as.factor(Processed1_Filter$CAS.Number)
+
+write.csv(Processed1_Filter, row.names = FALSE, file = "./Data/Processed/ProcessedForColumns")
+
+Mortality <- Processed1_Filter %>%
+  filter(Effect == "Mortality")
+
+ HoneyBeeMortalityExposureType <- Mortality %>%
+  filter(Species.Common.Name == "Honey Bee" | Species.Common.Name == "Buff Tailed Bumblebee" | Species.Common.Name == "Carniolan Honey Bee" | Species.Common.Name == "Bumble Bee" | Species.Common.Name == "Italian Honeybee" | Species.Common.Name == "European Dark Bee" | Species.Common.Name == "Buff-tailed Bumblebee" | Species.Common.Name =="Stingless Bee")
+ 
+ write.csv(HoneyBeeMortalityExposureType, row.names = FALSE, file = "./Data/Processed/BeeMortality")
+ 
+  NonBeeMortalityExposure <- Mortality %>%
+  filter(Species.Common.Name != "Honey Bee" | Species.Common.Name != "Buff Tailed Bumblebee" | Species.Common.Name != "Carniolan Honey Bee" | Species.Common.Name != "Bumble Bee" | Species.Common.Name != "Italian Honeybee" | Species.Common.Name != "European Dark Bee" | Species.Common.Name != "Buff-tailed Bumblebee" | Species.Common.Name !="Stingless Bee")
+  
+ write.csv(NonBeeMortalityExposure, row.names = FALSE, file = "./Data/Processed/NonBeeMortality")
+
+```
+
+Detail | Description
+------- | ---------
+Data Source | EPA ECOTOX Knowledgebase
+------- | ---------
+Retrieved From | https://cfpub.epa.gov/ecotox/help.cfm
+------- | ---------
+Variables Used |Chemical Name, Species Common Name, Organism Lifestage, Organism Age, Exposure Type, Effect, Effect Measurement
+------- | ---------
+Date Range | 1982-2019
 \newpage
 
 # Exploratory Analysis 
 
+```{r echo=FALSE, tab.cap = "Species List - Sample Number"}
 
+kable(summary(Mortality$Species.Common.Name), caption = "Species List - Sample Number")
+```
+
+
+
+```{r echo=FALSE,fig.cap = "Bee Mortality by Exposure Type"}
+
+
+ GGPlot_HoneyBee_Mortality_Exposure <- ggplot(HoneyBeeMortalityExposureType) +
+   aes(x = Exposure.Type) +
+   geom_bar() +
+   xlab("Exposure Type") +
+   ylab("Mortality Count") +
+   theme(axis.text.x = element_text(angle = 90))
+ print(GGPlot_HoneyBee_Mortality_Exposure)
+ 
+```
+
+```{r echo=FALSE, fig.cap = "Non-bee Mortality by Exposure Type"}
+ 
+ GGPlot_NonBee_Mortality_Exposure <- ggplot(NonBeeMortalityExposure) +
+   aes(x = Exposure.Type) +
+   geom_bar() +
+   ylab("Mortality Count") +
+   xlab("Exposure Type") +
+   theme(axis.text.x = element_text(angle = 90))
+ print(GGPlot_HoneyBee_Mortality_Exposure)
+```
+
+```{r echo=FALSE, fig.cap = "Bee Mortality by Chemical"}
+ 
+GGPlot_HoneyBee_Mortality_Chemical <- ggplot(HoneyBeeMortalityExposureType) +
+   aes(x = CAS.Number) +
+   geom_bar() +
+   xlab("Chemical") +
+   ylab("Mortality Count") +
+   theme(axis.text.x = element_text(angle = 90))
+ print( GGPlot_HoneyBee_Mortality_Chemical)
+```
+
+
+```{r echo=FALSE, fig.cap = "Non-bee Mortality by Chemical"}
+ GGPlot_NonBee_Mortality_Chemical <- ggplot(NonBeeMortalityExposure) +
+   aes(x = CAS.Number) +
+   geom_bar() +
+   ylab("Mortality Count") +
+   xlab("Chemical") +
+   theme(axis.text.x = element_text(angle = 90))
+ print(GGPlot_NonBee_Mortality_Chemical)
+```
 
 \newpage
 
@@ -56,9 +160,17 @@ Original_ECOTOX_CSV <- read.csv("../ECOTOX_Neonicotinoids_Insects_raw.csv", stri
 
 
 
-## Question 1: <insert specific question here and add additional subsections for additional questions below, if needed>
+## Question 1: Is there an exposure type that has less impact on bees than non-bee insects?
 
-## Question 2: 
+```{r}
+
+```
+
+
+
+
+
+## Question 2: Are there chemicals that have a high mortality rate for non-bee insects and low rate for bees?
 
 
 
