@@ -81,7 +81,7 @@ BeeMortalityExposureType <- Mortality %>%
  filter(Species.Common.Name == "Honey Bee" | Species.Common.Name == "Buff Tailed Bumblebee" | Species.Common.Name == "Carniolan Honey Bee" | Species.Common.Name == "Bumble Bee" | Species.Common.Name == "Italian Honeybee" | Species.Common.Name == "European Dark Bee" | Species.Common.Name == "Bee Order"| Species.Common.Name == "Buff-tailed Bumblebee" | Species.Common.Name =="Stingless Bee" | Species.Common.Name == "Mason Bee")
 
 
- write.csv(HoneyBeeMortalityExposureType, row.names = FALSE, file = "./Data/Processed/BeeMortality")
+write.csv(BeeMortalityExposureType, row.names = FALSE, file = "./Data/Processed/BeeMortality")
  
  
 NonBeeMortalityExposureType <- Mortality %>%
@@ -90,7 +90,7 @@ NonBeeMortalityExposureType <- Mortality %>%
 
     
     
- write.csv(NonBeeMortalityExposure, row.names = FALSE, file = "./Data/Processed/NonBeeMortality")
+ write.csv(NonBeeMortalityExposureType, row.names = FALSE, file = "./Data/Processed/NonBeeMortality")
 
 ```
 
