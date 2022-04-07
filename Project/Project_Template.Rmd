@@ -76,14 +76,22 @@ write.csv(Processed1_Filter, row.names = FALSE, file = "./Data/Processed/Process
 Mortality <- Processed1_Filter %>%
   filter(Effect == "Mortality")
 
- HoneyBeeMortalityExposureType <- Mortality %>%
-  filter(Species.Common.Name == "Honey Bee" | Species.Common.Name == "Buff Tailed Bumblebee" | Species.Common.Name == "Carniolan Honey Bee" | Species.Common.Name == "Bumble Bee" | Species.Common.Name == "Italian Honeybee" | Species.Common.Name == "European Dark Bee" | Species.Common.Name == "Buff-tailed Bumblebee" | Species.Common.Name =="Stingless Bee")
+ #HoneyBeeMortalityExposureType <- Mortality %>%
+ # filter(Species.Common.Name == "Honey Bee" | Species.Common.Name == "Buff Tailed Bumblebee" | Species.Common.Name == #"Carniolan Honey Bee" | Species.Common.Name == "Bumble Bee" | Species.Common.Name == "Italian Honeybee" | #Species.Common.Name == "European Dark Bee" | Species.Common.Name == "Buff-tailed Bumblebee" | Species.Common.Name #=="Stingless Bee")
  
+
+BeeMortalityExposureType <- Mortality %>%
+ filter(Species.Common.Name == "Honey Bee" | Species.Common.Name == "Carniolan Honey Bee" | Species.Common.Name == "Italian Honeybee" | Species.Common.Name == "Buff-tailed Bumblebee" | Species.Common.Name =="Stingless Bee") 
+
+
  write.csv(HoneyBeeMortalityExposureType, row.names = FALSE, file = "./Data/Processed/BeeMortality")
  
-  NonBeeMortalityExposure <- Mortality %>%
-  filter(Species.Common.Name != "Honey Bee" | Species.Common.Name != "Buff Tailed Bumblebee" | Species.Common.Name != "Carniolan Honey Bee" | Species.Common.Name != "Bumble Bee" | Species.Common.Name != "Italian Honeybee" | Species.Common.Name != "European Dark Bee" | Species.Common.Name != "Buff-tailed Bumblebee" | Species.Common.Name !="Stingless Bee")
-  
+ 
+NonBeeMortalityExposureType <- Mortality %>%
+ filter(Species.Common.Name == "Honey Bee" | Species.Common.Name == "Carniolan Honey Bee" | Species.Common.Name == "Italian Honeybee" | Species.Common.Name == "Buff-tailed Bumblebee" | Species.Common.Name =="Stingless Bee") 
+
+    
+    
  write.csv(NonBeeMortalityExposure, row.names = FALSE, file = "./Data/Processed/NonBeeMortality")
 
 ```
