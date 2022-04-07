@@ -67,7 +67,9 @@ In the wrangling process, we selected the relevant information to our topic. Thi
 
 ```{r echo=FALSE}
 Processed1_Filter <- Original_ECOTOX_CSV %>%
-  select(CAS.Number, Chemical.Name, Species.Common.Name, Organism.Lifestage, Organism.Age, Exposure.Type, Effect, Effect.Measurement) 
+  select( Species.Common.Name, Exposure.Type, Effect) 
+
+# Shivani removed CAS.Number, Chemical.Name,  Organism.Lifestage, Organism.Age, and  Effect.Measurement from the above Processed1_Filter dataset
 
 Processed1_Filter$CAS.Number <- as.factor(Processed1_Filter$CAS.Number)
 
