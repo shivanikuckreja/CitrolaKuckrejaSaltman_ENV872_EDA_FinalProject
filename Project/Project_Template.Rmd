@@ -67,9 +67,8 @@ In the wrangling process, we selected the relevant information to our topic. Thi
 
 ```{r echo=FALSE}
 Processed1_Filter <- Original_ECOTOX_CSV %>%
-  select( Species.Common.Name, Exposure.Type, Effect) 
+  select(CAS.Number, Chemical.Name, Species.Common.Name, Organism.Lifestage, Organism.Age, Exposure.Type, Effect, Effect.Measurement) 
 
-# Shivani removed CAS.Number, Chemical.Name,  Organism.Lifestage, Organism.Age, and  Effect.Measurement from the above Processed1_Filter dataset
 
 Processed1_Filter$CAS.Number <- as.factor(Processed1_Filter$CAS.Number)
 
@@ -119,41 +118,41 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List - Sample N
 ```{r echo=FALSE,fig.cap = "Bee Mortality by Exposure Type"}
 
 
- GGPlot_HoneyBee_Mortality_Exposure <- ggplot(HoneyBeeMortalityExposureType) +
+ GGPlot_Bee_Mortality_Exposure <- ggplot(BeeMortalityExposureType) +
    aes(x = Exposure.Type) +
    geom_bar() +
    xlab("Exposure Type") +
    ylab("Mortality Count") +
    theme(axis.text.x = element_text(angle = 90))
- print(GGPlot_HoneyBee_Mortality_Exposure)
+ print(GGPlot_Bee_Mortality_Exposure)
  
 ```
 
 ```{r echo=FALSE, fig.cap = "Non-bee Mortality by Exposure Type"}
  
- GGPlot_NonBee_Mortality_Exposure <- ggplot(NonBeeMortalityExposure) +
+ GGPlot_NonBee_Mortality_Exposure <- ggplot(NonBeeMortalityExposureType) +
    aes(x = Exposure.Type) +
    geom_bar() +
    ylab("Mortality Count") +
    xlab("Exposure Type") +
    theme(axis.text.x = element_text(angle = 90))
- print(GGPlot_HoneyBee_Mortality_Exposure)
+ print(GGPlot_NonBee_Mortality_Exposure)
 ```
 
 ```{r echo=FALSE, fig.cap = "Bee Mortality by Chemical"}
  
-GGPlot_HoneyBee_Mortality_Chemical <- ggplot(HoneyBeeMortalityExposureType) +
+GGPlot_Bee_Mortality_Chemical <- ggplot(BeeMortalityExposureType) +
    aes(x = CAS.Number) +
    geom_bar() +
    xlab("Chemical") +
    ylab("Mortality Count") +
    theme(axis.text.x = element_text(angle = 90))
- print( GGPlot_HoneyBee_Mortality_Chemical)
+ print( GGPlot_Bee_Mortality_Chemical)
 ```
 
 
 ```{r echo=FALSE, fig.cap = "Non-bee Mortality by Chemical"}
- GGPlot_NonBee_Mortality_Chemical <- ggplot(NonBeeMortalityExposure) +
+ GGPlot_NonBee_Mortality_Chemical <- ggplot(NonBeeMortalityExposureType) +
    aes(x = CAS.Number) +
    geom_bar() +
    ylab("Mortality Count") +
