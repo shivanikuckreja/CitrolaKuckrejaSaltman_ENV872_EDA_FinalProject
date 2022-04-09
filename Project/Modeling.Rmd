@@ -1,0 +1,62 @@
+---
+title: "Modeling"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+library(GGally)
+library(dplyr)
+
+Processed <- read.csv("../Data/Processed/ProcessedForColumns", stringsAsFactors = TRUE)
+
+Processed$Mortality <- ifelse(Processed$Effect=="Mortality", 1, 0) 
+
+BeeMortalityExposureType <- 
+  Processed %>% 
+  filter(Species.Common.Name == "Honey Bee" | Species.Common.Name == "Buff Tailed Bumblebee" | Species.Common.Name == "Carniolan Honey Bee" | Species.Common.Name == "Bumble Bee" | Species.Common.Name == "Italian Honeybee" | Species.Common.Name == "European Dark Bee" | Species.Common.Name == "Buff-tailed Bumblebee" | Species.Common.Name == "Stingless Bee" | Species.Common.Name =="Mason Bee")
+
+
+#Making new column categorical
+BeeMortalityExposureType$Mortality <- as.factor(BeeMortalityExposureType$Mortality)
+
+#Making all columns categorical as per Luana
+BeeMortalityExposureType$CAS.Number <- as.factor(BeeMortalityExposureType$CAS.Number)
+BeeMortalityExposureType$Chemical.Name <- as.factor(BeeMortalityExposureType$Chemical.Name)
+BeeMortalityExposureType$Species.Common.Name <- as.factor(BeeMortalityExposureType$Species.Common.Name)
+BeeMortalityExposureType$Organism.Lifestage <- as.factor(BeeMortalityExposureType$Organism.Lifestage)
+BeeMortalityExposureType$Organism.Age <- as.factor(BeeMortalityExposureType$Organism.Age)
+BeeMortalityExposureType$Exposure.Type <- as.factor(BeeMortalityExposureType$Exposure.Type)
+BeeMortalityExposureType$Effect <- as.factor(BeeMortalityExposureType$Effect)
+BeeMortalityExposureType$Effect.Measurement <- as.factor(BeeMortalityExposureType$Effect.Measurement)
+
+logit <- glm(Mortality ~ Exposure.Type, data = BeeMortalityExposureType, family = "binomial")
+summary(logit)
+
+#For every one unit change in dermal, the odds of mortality decrease by .87.
+#For every one unit change in Topical, the odds of mortality increase by 1.17. The P value of topical exposure type is 0.009, and is statistically significant.
+
+
+
+
+
+#???
+ggpairs(BeeMortalityExposureType, columns = c(6,7))
+
+#????
+bartlett.test(BeeMortalityExposureType$Exposure.Type ~ BeeMortalityExposureType$Effect)
+
+#Is there a cor test for categorical?
+cor.test(HoneyBeeMortalityExposureType$Exposure.Type, HoneyBeeMortalityExposureType$Effect)
+```
+
+
