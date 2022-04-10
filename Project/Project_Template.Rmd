@@ -165,7 +165,7 @@ GGPlot_Bee_Mortality_Chemical <- ggplot(BeeMortalityExposureType) +
 
 
 
-## Question 1: Is there an exposure type that has less impact on bees than non-bee insects?
+## Question 1: Is there an exposure type that is more likely to cause mortality for bees vs. non-bee insects?
 
 ```{r}
 
@@ -175,7 +175,7 @@ GGPlot_Bee_Mortality_Chemical <- ggplot(BeeMortalityExposureType) +
 
 
 
-## Question 2: Are there chemicals that have a high mortality rate for non-bee insects and low rate for bees?
+## Question 2: Are there chemicals that are more likely to cause mortality for bees vs. non-bee insects?
 
 
 
