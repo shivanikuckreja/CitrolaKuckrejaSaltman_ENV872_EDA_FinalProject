@@ -111,6 +111,8 @@ logit <- glm(Mortality ~ Exposure.Type, data = BeeMortalityExposureType, family 
 summary(logit)
 
 #For every one unit change in Topical, the odds of mortality increase by 1.1787. The P value of topical exposure type is 0.009, and is statistically significant.
+#Significance: Total topical samples 99 - mortality - 65
+#Additional data collection is needed on: Exposure through soil contact, drinking
 
 #Pseudo R2
  pR2(logit)
@@ -130,6 +132,8 @@ logit2 <- glm(Mortality ~ Exposure.Type, data = NonBeeMortalityExposure, family 
 summary(logit2)
 
 #Dipped or soaked, Direct application, Environmental- unspecified, Foliar spray, Ground spray, Hand spray, Spray, and Topical, general are all significant 
+#Plenty of samples for non-bees - correlations  
+#Conclusion: Spray could be an effective anthropogenic exposure technique to eliminate pests and preserve bees. Direct application like topical techniques should be avoided as they significantly harm all species. There appears to be environmental exposure types that can promote desired effect as well.
 
 #Pseudo R2
  pR2(logit2)
@@ -143,6 +147,9 @@ summary(logit2)
 logit3 <- glm(Mortality ~ CAS.Number, data = BeeMortalityExposureType, family = "binomial")
 summary(logit3)
 
+ #Need more data on 58842209 105843365 and 58842209, 150824478
+ # Every other chemical is statistically significant - 111988499 135410207 138261413  153719234 165252700 210880925 
+
 #Pseudo R2
  pR2(logit3)
 ```
@@ -152,6 +159,9 @@ summary(logit3)
 
 logit4 <- glm(Mortality ~ CAS.Number, data = NonBeeMortalityExposure, family = "binomial")
 summary(logit4)
+
+#There is no chemical that is effective at eliminating all non-bee species. 
+#Conclusion - exposure mechanism of chemical is a more reliable factor at understanding mortality than chemical itself. Bees do not respond well to any of the adminstered chemicals. Any treatment should focus on using the chemicals in ways that are ineffective at exposing bees and effective at exposing nonbees
 
 #Pseudo R2
  pR2(logit4)
