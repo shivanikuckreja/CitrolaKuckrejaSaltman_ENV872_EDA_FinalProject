@@ -32,6 +32,7 @@ library(lubridate)
 library(knitr)
 library(ggplot2)
 library(RColorBrewer)
+library(pscl)
 
 
 # Set your ggplot theme
@@ -111,6 +112,9 @@ summary(logit)
 
 #For every one unit change in Topical, the odds of mortality increase by 1.1787. The P value of topical exposure type is 0.009, and is statistically significant.
 
+#Pseudo R2
+ pR2(logit)
+
 ```
 
 ```{r}
@@ -126,6 +130,9 @@ logit2 <- glm(Mortality ~ Exposure.Type, data = NonBeeMortalityExposure, family 
 summary(logit2)
 
 #Dipped or soaked, Direct application, Environmental- unspecified, Foliar spray, Ground spray, Hand spray, Spray, and Topical, general are all significant 
+
+#Pseudo R2
+ pR2(logit2)
 
 
 ```
