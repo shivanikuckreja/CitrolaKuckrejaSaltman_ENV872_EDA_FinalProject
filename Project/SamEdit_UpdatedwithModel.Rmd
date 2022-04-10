@@ -164,6 +164,7 @@ summary(logit4)
  summary(NonBeeMortalityExposure$CAS.Number)
  
  #There is no chemical that is effective at eliminating all non-bee species. 
+ #Conclusion - exposure mechanism of chemical is a more reliable factor at understanding mortality than chemical itself. Bees do not respond well to any of the adminstered chemicals. Any treatment should focus on using the chemicals in ways that are ineffective at exposing bees and effective at exposing nonbees
 ```
 
 ```{r Bee Interactions}
