@@ -142,6 +142,9 @@ summary(logit2)
 
 logit3 <- glm(Mortality ~ CAS.Number, data = BeeMortalityExposureType, family = "binomial")
 summary(logit3)
+
+#Pseudo R2
+ pR2(logit3)
 ```
 
 ```{r}
@@ -150,6 +153,8 @@ summary(logit3)
 logit4 <- glm(Mortality ~ CAS.Number, data = NonBeeMortalityExposure, family = "binomial")
 summary(logit4)
 
+#Pseudo R2
+ pR2(logit4)
 ```
 
 
