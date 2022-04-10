@@ -156,7 +156,7 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List")
 
  GGPlot_Bee_Mortality_Exposure <- ggplot(BeeMortalityExposureType) +
    aes(x = Exposure.Type) +
-   geom_bar() +
+   geom_bar(fill = "light blue") +
    xlab("Exposure Type") +
    ylab("Mortality Count") +
    theme(axis.text.x = element_text(angle = 90))
@@ -168,7 +168,7 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List")
  
  GGPlot_NonBee_Mortality_Exposure <- ggplot(NonBeeMortalityExposure) +
    aes(x = Exposure.Type) +
-   geom_bar() +
+   geom_bar(fill = "light blue") +
    ylab("Mortality Count") +
    xlab("Exposure Type") +
    theme(axis.text.x = element_text(angle = 90))
@@ -179,7 +179,7 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List")
  
 GGPlot_Bee_Mortality_Chemical <- ggplot(BeeMortalityExposureType) +
    aes(x = CAS.Number) +
-   geom_bar() +
+   geom_bar(fill = "light blue") +
    xlab("Chemical") +
    ylab("Mortality Count") +
    theme(axis.text.x = element_text(angle = 90))
@@ -190,7 +190,7 @@ GGPlot_Bee_Mortality_Chemical <- ggplot(BeeMortalityExposureType) +
 ```{r echo=FALSE, fig.cap = "Non-bee Mortality by Chemical"}
  GGPlot_NonBee_Mortality_Chemical <- ggplot(NonBeeMortalityExposure) +
    aes(x = CAS.Number) +
-   geom_bar() +
+   geom_bar(fill = "light blue") +
    ylab("Mortality Count") +
    xlab("Chemical") +
    theme(axis.text.x = element_text(angle = 90))
