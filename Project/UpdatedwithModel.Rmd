@@ -130,6 +130,21 @@ summary(logit2)
 
 ```
 
+```{r}
+#Which chemical types have a significant effect (mortality) on bee species?
+
+logit3 <- glm(Mortality ~ CAS.Number, data = BeeMortalityExposureType, family = "binomial")
+summary(logit3)
+```
+
+```{r}
+#Which exposure types have a significant effect (mortality) on non bee species?
+
+logit4 <- glm(Mortality ~ CAS.Number, data = NonBeeMortalityExposure, family = "binomial")
+summary(logit4)
+
+```
+
 
 Detail | Description
 ------- | ---------
@@ -146,7 +161,7 @@ Date Range | 1982-2019
 
 ```{r echo=FALSE, tab.cap = "Species List - Sample Number"}
 
-kable(summary(Mortality$Species.Common.Name), caption = "Species List")
+kable(summary(Processed1_Filter$Species.Common.Name), caption = "Species List")
 ```
 
 
