@@ -175,10 +175,15 @@ kable(summary(Processed1_Filter$Species.Common.Name), caption = "Species List")
 
 ```{r echo=FALSE,fig.cap = "Bee Mortality by Exposure Type"}
 
+GGPlotMortalityBeeFilter <- BeeMortalityExposureType %>%
+  filter(Effect == "Mortality")
+ 
+GGPlotMortalityNonBeeFilter <- NonBeeMortalityExposure %>%
+  filter(Effect == "Mortality")
 
- GGPlot_Bee_Mortality_Exposure <- ggplot(BeeMortalityExposureType) +
+ GGPlot_Bee_Mortality_Exposure <- ggplot(GGPlotMortalityBeeFilter) +
    aes(x = Exposure.Type) +
-   geom_bar(fill = "light blue") +
+   geom_bar() +
    xlab("Exposure Type") +
    ylab("Mortality Count") +
    theme(axis.text.x = element_text(angle = 90))
@@ -188,9 +193,10 @@ kable(summary(Processed1_Filter$Species.Common.Name), caption = "Species List")
 
 ```{r echo=FALSE, fig.cap = "Non-bee Mortality by Exposure Type"}
  
- GGPlot_NonBee_Mortality_Exposure <- ggplot(NonBeeMortalityExposure) +
+ 
+ GGPlot_NonBee_Mortality_Exposure <- ggplot(GGPlotMortalityNonBeeFilter) +
    aes(x = Exposure.Type) +
-   geom_bar(fill = "light blue") +
+   geom_bar() +
    ylab("Mortality Count") +
    xlab("Exposure Type") +
    theme(axis.text.x = element_text(angle = 90))
@@ -199,9 +205,9 @@ kable(summary(Processed1_Filter$Species.Common.Name), caption = "Species List")
 
 ```{r echo=FALSE, fig.cap = "Bee Mortality by Chemical"}
  
-GGPlot_Bee_Mortality_Chemical <- ggplot(BeeMortalityExposureType) +
+GGPlot_Bee_Mortality_Chemical <- ggplot(GGPlotMortalityBeeFilter) +
    aes(x = CAS.Number) +
-   geom_bar(fill = "light blue") +
+   geom_bar() +
    xlab("Chemical") +
    ylab("Mortality Count") +
    theme(axis.text.x = element_text(angle = 90))
@@ -210,9 +216,9 @@ GGPlot_Bee_Mortality_Chemical <- ggplot(BeeMortalityExposureType) +
 
 
 ```{r echo=FALSE, fig.cap = "Non-bee Mortality by Chemical"}
- GGPlot_NonBee_Mortality_Chemical <- ggplot(NonBeeMortalityExposure) +
+ GGPlot_NonBee_Mortality_Chemical <- ggplot(GGPlotMortalityNonBeeFilter) +
    aes(x = CAS.Number) +
-   geom_bar(fill = "light blue") +
+   geom_bar() +
    ylab("Mortality Count") +
    xlab("Chemical") +
    theme(axis.text.x = element_text(angle = 90))
