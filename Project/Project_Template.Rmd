@@ -89,8 +89,6 @@ NonBeeMortalityExposureType <- Mortality %>%
  filter(Species.Common.Name == "Japanese Beetle" | Species.Common.Name == "Wireworm" | Species.Common.Name == "Asian Citrus Psyllid" | Species.Common.Name == "Parasitoid Wasp" | Species.Common.Name =="Snout Beetle Family, Weevil" | Species.Common.Name =="Sweetpotato Whitefly" | Species.Common.Name =="Predatory Mite" | Species.Common.Name =="Scarab Beetle" | Species.Common.Name =="Ground Beetle Family" | Species.Common.Name =="Chalcid Wasp" | Species.Common.Name =="Spider/Mite Class" | Species.Common.Name =="Ladybird Beetle" | Species.Common.Name =="Argentine Ant" | Species.Common.Name =="Horned Oak Gall Wasp" | Species.Common.Name =="Tooth-necked Fungus Beetle" | Species.Common.Name =="Calico Scale" | Species.Common.Name =="Minute Parasitic Wasps" | Species.Common.Name =="Silkworm" | Species.Common.Name =="Moth And Butterfly Order" | Species.Common.Name =="Hemlock Wooly Adelgid" | Species.Common.Name =="Western Flower Thrips" | Species.Common.Name =="House Fly" | Species.Common.Name =="Spined Soldier Bug" | Species.Common.Name =="Eulophid Wasp" | Species.Common.Name =="Yellow Fever Mosquito" | Species.Common.Name =="Eastern Subterranean Termite" | Species.Common.Name =="Pea Aphid" | Species.Common.Name =="Glasshouse Potato Wasp" | Species.Common.Name =="Two Spotted Lady Beetle" | Species.Common.Name =="(Other)" | Species.Common.Name =="Parasitic Wasp" | Species.Common.Name =="Asian Lady Beetle" | Species.Common.Name =="Parastic Wasp" | Species.Common.Name =="Erythrina Gall Wasp" | Species.Common.Name =="Sevenspotted Lady Beetle" | Species.Common.Name =="Aphid Family" | Species.Common.Name =="Braconid Wasp" | Species.Common.Name =="Ladybird Beetle Family" | Species.Common.Name =="Spring Tiphia" | Species.Common.Name =="Rove Beetle Family" | Species.Common.Name =="Convergent Lady Beetle" | Species.Common.Name =="Tobacco Flea Beetle" | Species.Common.Name =="Beetle" | Species.Common.Name =="Leaf Beetle Family" |Species.Common.Name =="Codling Moth" | Species.Common.Name =="Fairyfly Parasitoid" | Species.Common.Name =="Mirid Bug" | Species.Common.Name =="Vedalia Beetle" | Species.Common.Name =="Egg Parasitoid" | Species.Common.Name =="Oystershell Scale Parasitoid" | Species.Common.Name =="Mite" | Species.Common.Name =="Corn Earworm" |Species.Common.Name =="Ox Beetle" | Species.Common.Name =="Armoured Scale Family" | Species.Common.Name =="Monarch Butterfly" | Species.Common.Name =="Braconid Parasitoid" | Species.Common.Name =="Jassid" | Species.Common.Name =="Pond Wolf Spider" | Species.Common.Name =="Lacewing" | Species.Common.Name =="Ant Family" |Species.Common.Name =="Euonymus Scale" | Species.Common.Name =="Minute Pirate Bug" | Species.Common.Name =="Colorado Potato Beetle" | Species.Common.Name =="Beetle Order" | Species.Common.Name =="True Bug Order" | Species.Common.Name =="Cotton Aphid" | Species.Common.Name =="" | Species.Common.Name =="" |Species.Common.Name =="Thrip Order" | Species.Common.Name =="Cabbage Looper" | Species.Common.Name =="Parasitoid" | Species.Common.Name =="Tobacco Aphid" | Species.Common.Name =="Citrus Leafminer" | Species.Common.Name =="Mosquito" | Species.Common.Name =="Flatheaded Appletree Borer" | Species.Common.Name =="Potato Leafhopper" |Species.Common.Name =="Black-spotted Lady Beetle" | Species.Common.Name =="Lady Beetle" | Species.Common.Name =="Mulberry Pyralid" | Species.Common.Name =="Araneoid Spider Order" | Species.Common.Name =="Insect Class" | Species.Common.Name =="Hemlock Woolly Adelgid Lady Beetle" | Species.Common.Name =="Onion Thrip" | Species.Common.Name =="Green Peach Aphid" |Species.Common.Name =="Red Scale Parasite" | Species.Common.Name =="Diamondback Moth" | Species.Common.Name =="Predatory Bug" | Species.Common.Name =="Common Thrip" | Species.Common.Name =="Mite Order" | Species.Common.Name =="Spotless Ladybird Beetle" | Species.Common.Name =="Southern House Mosquito" | Species.Common.Name =="Apple Maggot")
 
 
-    
-    
  write.csv(NonBeeMortalityExposureType, row.names = FALSE, file = "./Data/Processed/NonBeeMortality")
 
 ```
@@ -120,7 +118,7 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List - Sample N
 
  GGPlot_Bee_Mortality_Exposure <- ggplot(BeeMortalityExposureType) +
    aes(x = Exposure.Type) +
-   geom_bar() +
+   geom_bar(fill = "light blue") +
    xlab("Exposure Type") +
    ylab("Mortality Count") +
    theme(axis.text.x = element_text(angle = 90))
@@ -132,7 +130,7 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List - Sample N
  
  GGPlot_NonBee_Mortality_Exposure <- ggplot(NonBeeMortalityExposureType) +
    aes(x = Exposure.Type) +
-   geom_bar() +
+   geom_bar(fill = "light blue") +
    ylab("Mortality Count") +
    xlab("Exposure Type") +
    theme(axis.text.x = element_text(angle = 90))
