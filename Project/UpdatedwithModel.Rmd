@@ -52,9 +52,9 @@ Original_ECOTOX_CSV <- read.csv("./Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.cs
 
 Questions:
 
-1.   _Is there an exposure type that has less impact on bees than non-bee insects?_
+1.   _Is there an exposure type that is more likely to cause mortality for bees vs. non-bee insects?_
 
-2.   _Are there chemicals that have a high mortality rate for non-bee insects and low rate for bees?_
+2.   _Are there chemicals that are more likely to cause mortality for bees vs. non-bee insects?_
   
 
 \newpage
@@ -156,7 +156,7 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List")
 
  GGPlot_Bee_Mortality_Exposure <- ggplot(BeeMortalityExposureType) +
    aes(x = Exposure.Type) +
-   geom_bar() +
+   geom_bar(fill = "light blue") +
    xlab("Exposure Type") +
    ylab("Mortality Count") +
    theme(axis.text.x = element_text(angle = 90))
@@ -168,7 +168,7 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List")
  
  GGPlot_NonBee_Mortality_Exposure <- ggplot(NonBeeMortalityExposure) +
    aes(x = Exposure.Type) +
-   geom_bar() +
+   geom_bar(fill = "light blue") +
    ylab("Mortality Count") +
    xlab("Exposure Type") +
    theme(axis.text.x = element_text(angle = 90))
@@ -179,7 +179,7 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List")
  
 GGPlot_Bee_Mortality_Chemical <- ggplot(BeeMortalityExposureType) +
    aes(x = CAS.Number) +
-   geom_bar() +
+   geom_bar(fill = "light blue") +
    xlab("Chemical") +
    ylab("Mortality Count") +
    theme(axis.text.x = element_text(angle = 90))
@@ -190,7 +190,7 @@ GGPlot_Bee_Mortality_Chemical <- ggplot(BeeMortalityExposureType) +
 ```{r echo=FALSE, fig.cap = "Non-bee Mortality by Chemical"}
  GGPlot_NonBee_Mortality_Chemical <- ggplot(NonBeeMortalityExposure) +
    aes(x = CAS.Number) +
-   geom_bar() +
+   geom_bar(fill = "light blue") +
    ylab("Mortality Count") +
    xlab("Chemical") +
    theme(axis.text.x = element_text(angle = 90))
@@ -203,7 +203,7 @@ GGPlot_Bee_Mortality_Chemical <- ggplot(BeeMortalityExposureType) +
 
 
 
-## Question 1: Is there an exposure type that has less impact on bees than non-bee insects?
+## Question 1: Is there an exposure type that is more likely to cause mortality for bees vs. non-bee insects?
 
 ```{r}
 #Might need to reword this. I don't think we know how to do the modeling for this. Right now, we know which exposure types have a statistically significant lethal effect on bee and non bee species?
@@ -215,7 +215,7 @@ GGPlot_Bee_Mortality_Chemical <- ggplot(BeeMortalityExposureType) +
 
 
 
-## Question 2: Are there chemicals that have a high mortality rate for non-bee insects and low rate for bees?
+## Question 2: Are there chemicals that are more likely to cause mortality for bees vs. non-bee insects?
 
 
 
