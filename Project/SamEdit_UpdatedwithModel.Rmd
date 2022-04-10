@@ -100,6 +100,8 @@ write.csv(Processed1_Filter, row.names = FALSE, file = "./Data/Processed/Process
 ```{r}
 
 #Which exposure types have a significant effect (mortality) on bee species?
+#Do not group. Want to see nuances between similar categories 
+
 BeeMortalityExposureType$Mortality <- ifelse(BeeMortalityExposureType$Effect=="Mortality", 1, 0) 
 
 #Making new column categorical
@@ -109,6 +111,9 @@ logit <- glm(Mortality ~ Exposure.Type, data = BeeMortalityExposureType, family 
 summary(logit)
 
 #For every one unit change in Topical, the odds of mortality increase by 1.1787. The P value of topical exposure type is 0.009, and is statistically significant.
+
+#Significance: Total topical samples 99 - mortality - 65
+#Additional data collection is needed on: Exposure through soil contact, drinking
 
 ```
 
@@ -124,16 +129,27 @@ NonBeeMortalityExposure$Mortality <- as.factor(NonBeeMortalityExposure$Mortality
 logit2 <- glm(Mortality ~ Exposure.Type, data = NonBeeMortalityExposure, family = "binomial")
 summary(logit2)
 
+
 #Dipped or soaked, Direct application, Environmental- unspecified, Foliar spray, Ground spray, Hand spray, Spray, and Topical, general are all significant 
+
+#Plenty of samples for non-bees - correlations  
+
+#Conclusion: Spray could be an effective anthropogenic exposure technique to eliminate pests and preserve bees. Direct application like topical techniques should be avoided as they significantly harm all species. There appears to be environmental exposure types that can promote desired effect as well.
 
 
 ```
 
 ```{r}
-#Which chemicaltypes have a significant effect (mortality) on bee species?
+#Which chemical types have a significant effect (mortality) on bee species?
 
 logit3 <- glm(Mortality ~ CAS.Number, data = BeeMortalityExposureType, family = "binomial")
 summary(logit3)
+
+ summary(GGPlotMortalityBeeFilter$CAS.Number)
+ summary(BeeMortalityExposureType$CAS.Number)
+ 
+ #Need more data on 58842209 105843365 and 58842209, 150824478
+ # Every other chemical is statistically significant - 111988499 135410207 138261413  153719234 165252700 210880925 
 
 ```
 
@@ -143,7 +159,23 @@ summary(logit3)
 
 logit4 <- glm(Mortality ~ CAS.Number, data = NonBeeMortalityExposure, family = "binomial")
 summary(logit4)
+
+ summary(GGPlotMortalityNonBeeFilter$CAS.Number)
+ summary(NonBeeMortalityExposure$CAS.Number)
+ 
+ #There is no chemical that is effective at eliminating all non-bee species. 
 ```
+
+```{r Bee Interactions}
+
+logit5 <- glm(Mortality ~ CAS.Number * Exposure.Type, data = NonBeeMortalityExposure, family = "binomial")
+summary(logit5)
+
+logit6 <- glm(Mortality ~ CAS.Number * Exposure.Type, data = BeeMortalityExposureType, family = "binomial")
+summary(logit6)
+```
+
+
 
 Detail | Description
 ------- | ---------
@@ -180,7 +212,8 @@ GGPlotMortalityNonBeeFilter <- NonBeeMortalityExposure %>%
    theme(axis.text.x = element_text(angle = 90))
  print(GGPlot_Bee_Mortality_Exposure)
  
- 
+ summary(GGPlotMortalityBeeFilter$Exposure.Type)
+ summary(BeeMortalityExposureType$Exposure.Type)
 ```
 
 ```{r echo=FALSE, fig.cap = "Non-bee Mortality by Exposure Type"}
@@ -193,6 +226,8 @@ GGPlotMortalityNonBeeFilter <- NonBeeMortalityExposure %>%
    theme(axis.text.x = element_text(angle = 90))
  print(GGPlot_NonBee_Mortality_Exposure)
  
+ summary(GGPlotMortalityNonBeeFilter$Exposure.Type)
+ summary(NonBeeMortalityExposure$Exposure.Type)
  
 ```
 
