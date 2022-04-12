@@ -49,7 +49,7 @@ Original_ECOTOX_CSV <- read.csv("./Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.cs
 
 # Rationale and Research Questions
 
-**Pollination is a critical component of agriculture. Honeybees are important pollinators. Our research looks to see if there are exposure methods and chemicals that do not cause significant harm to honeybees while eliminating pests. The goal of our research is to determine potential treatment methods that reduce pests while having little to no impact on pollinators.**
+**Pollination is a critical component of agriculture. Bees are important pollinators. Our research looks to see if there are exposure methods and chemicals that do not cause significant harm to bees while eliminating pests. The goal of our research is to determine potential treatment methods that reduce pests while having little to no impact on bees.**
 
 Questions:
 
