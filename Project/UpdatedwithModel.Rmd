@@ -202,6 +202,7 @@ GGPlotMortalityBeeFilter <- BeeMortalityExposureType %>%
 GGPlotMortalityNonBeeFilter <- NonBeeMortalityExposure %>%
   filter(Effect == "Mortality")
 
+#reorder or order?? Tried but not working
  GGPlot_Bee_Mortality_Exposure <- ggplot(GGPlotMortalityBeeFilter) +
    aes(x = Exposure.Type) +
    geom_bar(aes(color = Exposure.Type, fill = Exposure.Type), method = "lm") +
