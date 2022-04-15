@@ -26,7 +26,7 @@ editor_options:
 # Set your working directory
 getwd()
 # Load your packages
-
+library(viridis)
 library(tidyverse)
 library(lubridate)
 library(knitr)
@@ -62,9 +62,15 @@ Questions:
 
 # Dataset Information
 
-Data Source: The dataset was pulled from a repository created for Environmental Data Analytics at Duke University in 2020. The data collected is from several EPA studies on neonicotinoids and their effects on insects. The data we will be analyzing is the type of chemical administered, how it was administered, and how both of these variables affected insects. 
+Data Source: The dataset was pulled from a repository created for Environmental 
+Data Analytics at Duke University in 2020. The data collected is from several 
+EPA studies on neonicotinoids and their effects on insects. The data we will be 
+analyzing is the type of chemical administered, how it was administered, and 
+how both of these variables impact insects. 
 
-In the wrangling process, we selected the relevant information to our topic. This includes the chemical type, insect species, lifestage and age of the species, exposure type and the effect of the exposure.
+In the wrangling process, we selected the relevant information to our topic. 
+This includes the chemical type, insect species, lifestage and age of the species, 
+exposure type and the effect of the exposure.
 
 ```{r echo=FALSE}
 Processed1_Filter <- Original_ECOTOX_CSV %>%
@@ -198,7 +204,8 @@ GGPlotMortalityNonBeeFilter <- NonBeeMortalityExposure %>%
 
  GGPlot_Bee_Mortality_Exposure <- ggplot(GGPlotMortalityBeeFilter) +
    aes(x = Exposure.Type) +
-   geom_bar() +
+   geom_bar(aes(color = Exposure.Type, fill = Exposure.Type), method = "lm") +
+   scale_fill_viridis(discrete = TRUE, option = "B") +
    xlab("Exposure Type") +
    ylab("Mortality Count") +
    theme(axis.text.x = element_text(angle = 90))
@@ -211,7 +218,8 @@ GGPlotMortalityNonBeeFilter <- NonBeeMortalityExposure %>%
  
  GGPlot_NonBee_Mortality_Exposure <- ggplot(GGPlotMortalityNonBeeFilter) +
    aes(x = Exposure.Type) +
-   geom_bar() +
+   geom_bar(aes(color = Exposure.Type, fill = Exposure.Type), method = "lm") +
+   scale_fill_viridis(discrete = TRUE, option = "B") +
    ylab("Mortality Count") +
    xlab("Exposure Type") +
    theme(axis.text.x = element_text(angle = 90))
@@ -222,7 +230,8 @@ GGPlotMortalityNonBeeFilter <- NonBeeMortalityExposure %>%
  
 GGPlot_Bee_Mortality_Chemical <- ggplot(GGPlotMortalityBeeFilter) +
    aes(x = CAS.Number) +
-   geom_bar() +
+   geom_bar(aes(color = CAS.Number, fill = CAS.Number), method = "lm") +
+   scale_fill_viridis(discrete = TRUE, option = "B") +
    xlab("Chemical") +
    ylab("Mortality Count") +
    theme(axis.text.x = element_text(angle = 90))
@@ -231,9 +240,11 @@ GGPlot_Bee_Mortality_Chemical <- ggplot(GGPlotMortalityBeeFilter) +
 
 
 ```{r echo=FALSE, fig.cap = "Non-bee Mortality by Chemical"}
- GGPlot_NonBee_Mortality_Chemical <- ggplot(GGPlotMortalityNonBeeFilter) +
+ 
+GGPlot_NonBee_Mortality_Chemical <- ggplot(GGPlotMortalityNonBeeFilter) +
    aes(x = CAS.Number) +
-   geom_bar() +
+   geom_bar(aes(color = CAS.Number, fill = CAS.Number), method = "lm") +
+   scale_fill_viridis(discrete = TRUE, option = "B") +
    ylab("Mortality Count") +
    xlab("Chemical") +
    theme(axis.text.x = element_text(angle = 90))
