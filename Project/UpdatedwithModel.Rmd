@@ -208,7 +208,7 @@ GGPlotMortalityNonBeeFilter <- NonBeeMortalityExposure %>%
    scale_fill_viridis(discrete = TRUE, option = "B") +
    xlab("Exposure Type") +
    ylab("Mortality Count") +
-   theme(axis.text.x = element_text(angle = 90))
+   theme(axis.text.x = element_text(angle = 90)) 
  print(GGPlot_Bee_Mortality_Exposure)
  
 ```
