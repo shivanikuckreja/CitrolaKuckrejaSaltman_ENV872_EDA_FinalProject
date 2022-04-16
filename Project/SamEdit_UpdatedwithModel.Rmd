@@ -328,10 +328,10 @@ GGPlot_Bee_Mortality_Chemical <- ggplot(GGPlotMortalityBeeFilter) +
 
 ## Question 1: Is there an exposure type that has less impact on bees than non-bee insects?
 
-```{r}
-#Might need to reword this. I don't think we know how to do the modeling for this. Right now, we know which exposure types have a statistically significant lethal effect on bee and non bee species?
+```{r echo=FALSE, tab.cap = "Dataset Structure"}
 
 
+kable(colnames(Processed1_Filter))
 ```
 
 

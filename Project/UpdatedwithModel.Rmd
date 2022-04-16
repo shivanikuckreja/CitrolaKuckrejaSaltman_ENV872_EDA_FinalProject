@@ -69,8 +69,8 @@ analyzing is the type of chemical administered, how it was administered, and
 how both of these variables impact insects. 
 
 In the wrangling process, we selected the relevant information to our topic. 
-This includes the chemical type, insect species, lifestage and age of the species, 
-exposure type and the effect of the exposure.
+This includes the chemical type, chemical number, insect species, lifestage and age of the species, 
+exposure type, the effect of the exposure and the measurement of the exposure. An example of an exposure type is giving food to a bee. An example of an effect is mortality, and the measurement is a more detailed analysis of the effect. 
 
 ```{r echo=FALSE}
 Processed1_Filter <- Original_ECOTOX_CSV %>%
@@ -104,6 +104,12 @@ write.csv(Processed1_Filter, row.names = FALSE, file = "./Data/Processed/Process
  write.csv(NonBeeMortalityExposure, row.names = FALSE, file = "./Data/Processed/NonBeeMortality")
 
 ```
+
+```{r echo=FALSE, tab.cap = "Data Structure"}
+kable(colnames(Processed1_Filter))
+```
+
+
 
 ```{r}
 
