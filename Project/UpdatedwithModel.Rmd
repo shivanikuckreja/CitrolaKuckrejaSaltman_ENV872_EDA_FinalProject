@@ -217,6 +217,7 @@ Next we analyze to see if there is any statistical significance supporting these
 
 # Analysis
 
+We ran GLMs to analyze our categorical data. Using the if/else statement to create the mortality column, we were able to compare mortality against all other effects. We ran two GLMs for the bee category and two for the non-bee categories. The two types of GLMs we ran analyzed mortality against exposure type and mortality against chemical type.To understand if this regression was a fit, we ran a pseudo regression using the pR2 function on each GLM as well
 
 
 ## Question 1: Is there an exposure type that is more likely to cause mortality for bees vs. non-bee insects?
