@@ -72,6 +72,9 @@ In the wrangling process, we selected the relevant information to our topic.
 This includes the chemical type, chemical number, insect species, lifestage and age of the species, 
 exposure type, the effect of the exposure and the measurement of the exposure. An example of an exposure type is giving food to a bee. An example of an effect is mortality, and the measurement is a more detailed analysis of the effect. 
 
+We converted all these selected categorical variables to factors to prep for analysis. In the next step, we processed two data frames – oall bee species and all non-bee species. The split resulted in 2529 non-bee observations and 1407 bee observations. Lastly we added a mortality column using an ifelse statement. We did this to run a binomial glm in our analysis. We coded mortality as 1 and everything else as 0. 
+
+
 ```{r echo=FALSE}
 Processed1_Filter <- Original_ECOTOX_CSV %>%
   select(CAS.Number, Chemical.Name, Species.Common.Name, Organism.Lifestage, Organism.Age, Exposure.Type, Effect, Effect.Measurement) 
