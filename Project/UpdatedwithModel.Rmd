@@ -108,13 +108,6 @@ write.csv(Processed1_Filter, row.names = FALSE, file = "./Data/Processed/Process
 
 ```
 
-```{r echo=FALSE, tab.cap = "Data Structure"}
-kable(colnames(Processed1_Filter))
-```
-
-
-
-
 
 
 Detail | Description
@@ -123,21 +116,22 @@ Data Source | EPA ECOTOX Knowledgebase
 ------- | ---------
 Retrieved From | https://cfpub.epa.gov/ecotox/help.cfm
 ------- | ---------
-Variables Used |Chemical Name, Species Common Name, Organism Lifestage, Organism Age, Exposure Type, Effect, Effect Measurement
+Variables Used | Chemical Number, Chemical Name, Species Common Name, Organism Lifestage, Organism Age, Exposure Type, Effect, Effect Measurement
 ------- | ---------
 Date Range | 1982-2019
 \newpage
 
 # Exploratory Analysis 
 
+Summary of all species in study
 ```{r echo=FALSE, tab.cap = "Species List - Sample Number"}
 
 kable(summary(Processed1_Filter$Species.Common.Name), caption = "Species List")
 ```
 
+Bar chart comparing exposure type to mortality count of bees. It initially looked like bees are more likely to die when chemical exposure comes from consuming food.The other exposure types do not look particularly significant
 
-
-```{r echo=FALSE,fig.cap = "Bee Mortality by Exposure Type"}
+```{r echo=FALSE,fig.cap = "Bee Mortality by Exposure Type", warning=FALSE}
 
 GGPlotMortalityBeeFilter <- BeeMortalityExposureType %>%
   filter(Effect == "Mortality")
@@ -157,7 +151,9 @@ GGPlotMortalityNonBeeFilter <- NonBeeMortalityExposure %>%
  
 ```
 
-```{r echo=FALSE, fig.cap = "Non-bee Mortality by Exposure Type"}
+Bar chart comparing exposure type to mortality count of non-bees. Exposure from an environmental source appears more lethal to non-bees species. 
+
+```{r echo=FALSE, fig.cap = "Non-bee Mortality by Exposure Type", warning=FALSE}
  
  
  GGPlot_NonBee_Mortality_Exposure <- ggplot(GGPlotMortalityNonBeeFilter) +
@@ -170,7 +166,11 @@ GGPlotMortalityNonBeeFilter <- NonBeeMortalityExposure %>%
  print(GGPlot_NonBee_Mortality_Exposure)
 ```
 
-```{r echo=FALSE, fig.cap = "Bee Mortality by Chemical"}
+The next area of exploration was looking into how many bee and non-bee samples died from exposure to certain chemical compounds. We used the chemical number as the chemical names are complex.
+
+This bar chart looking at bees suggests that three types of chemical compounds in this dataset are toxic to bees.
+
+```{r echo=FALSE, fig.cap = "Bee Mortality by Chemical", warning=FALSE}
  
 GGPlot_Bee_Mortality_Chemical <- ggplot(GGPlotMortalityBeeFilter) +
    aes(x = CAS.Number) +
@@ -182,8 +182,9 @@ GGPlot_Bee_Mortality_Chemical <- ggplot(GGPlotMortalityBeeFilter) +
  print( GGPlot_Bee_Mortality_Chemical)
 ```
 
+This bar chart looking at bees suggests that three types of chemical compounds in this dataset are toxic to non-bees.
 
-```{r echo=FALSE, fig.cap = "Non-bee Mortality by Chemical"}
+```{r echo=FALSE, fig.cap = "Non-bee Mortality by Chemical", warning=FALSE}
  
 GGPlot_NonBee_Mortality_Chemical <- ggplot(GGPlotMortalityNonBeeFilter) +
    aes(x = CAS.Number) +
@@ -195,6 +196,7 @@ GGPlot_NonBee_Mortality_Chemical <- ggplot(GGPlotMortalityNonBeeFilter) +
  print(GGPlot_NonBee_Mortality_Chemical)
 ```
 
+Next we analyze to see if there is any statistical significance supporting these observations.
 \newpage
 
 # Analysis
