@@ -287,6 +287,8 @@ Hand spray                    |                   3.41e-09
 Spray                          |                  2.16e-08
 Topical, general                |                   0.018538
 
+*Pseudo McFadden Score = 0.2142859
+
 
 ## Question 2: Are there chemicals that are more likely to cause mortality for bees vs. non-bee insects?
 ```{r}
@@ -311,6 +313,8 @@ Chemical Effect on Bees  |    Pr(>|z|)
 165252700  |   0.003599 ** 
 210880925  |   0.000189 ***
 
+*Pseudo McFadden Score = 0.03867201
+
 
 ```{r}
 #Which exposure types have a significant effect (mortality) on non bee species?
@@ -329,7 +333,7 @@ Chemical Effect on Non-Bees |Pr(>|z|)
 ------- | ---------
 Chemical | None
 
-
+*Pseudo McFadden Score = 4.373360e-02
 
 \newpage
 

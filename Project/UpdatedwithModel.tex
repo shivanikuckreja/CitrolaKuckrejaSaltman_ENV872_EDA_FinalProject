@@ -394,6 +394,24 @@ mortality against exposure type and mortality against chemical type.To
 understand if this regression was a fit, we ran a pseudo regression
 using the pR2 function on each GLM as well
 
+The `logit' model evaluated the effect of exposure type on mortality on
+bee species. The results of this model showed that topical exposure had
+a significant effect on bee mortality (p=.009). For every one unit
+change in topical, the odds of mortality increase by 1.1787. In
+comparison to non-bee species, `logit2' had various exposure types that
+had a significant effect on mortality. The significant exposure types
+included dipped or soaked, direct application, drinking water,
+environmental (unspecified), foliar spray, ground spray, hand spray,
+spray, and topical.
+
+The `logit3' and `logit4' models evaluated which chemical types have a
+lethal effect on bee and non bee species. The results of `logit3' showed
+that nearly all chemical types with data had a significant effect on
+bees. However, the only chemical that was not significant (150824478)
+only had one entry. The results of `logit4' showed that no chemical had
+a significant effect on non-bee species. The results of the four models
+are summarized in Table 1.
+
 \hypertarget{question-1-is-there-an-exposure-type-that-is-more-likely-to-cause-mortality-for-bees-vs.-non-bee-insects}{%
 \subsection{Question 1: Is there an exposure type that is more likely to
 cause mortality for bees vs.~non-bee
@@ -495,6 +513,8 @@ Exposure Effect on Bees & Pr(\textgreater{} \\
 Topical, general & 0.009 ** \\
 \bottomrule
 \end{longtable}
+
+*Pseudo McFadden Score = 0.07748671
 
 \begin{Shaded}
 \begin{Highlighting}[]
