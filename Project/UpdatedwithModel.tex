@@ -142,11 +142,14 @@
 Questions}\label{rationale-and-research-questions}}
 
 \textbf{Pollination is a critical component of agriculture. Bees are
-important pollinators. Our research looks to see if there are exposure
-methods and chemicals that do not cause significant harm to bees while
-eliminating pests. The goal of our research is to determine potential
-treatment methods that reduce pests while having little to no impact on
-bees.}
+important pollinators, however, a decline in pollinators has been linked
+to extensive use of insecticides. Measuring hazardous and lethal
+toxicity as well as potential side effects for various pollinators could
+be utilized for research or management recommendations. Our analysis
+evaluates if there are exposure methods and chemicals that do not cause
+significant harm to bees while eliminating pests. The goal of our
+analysis is to determine potential treatment methods that reduce pests
+while having a non-lethal impact on bees.}
 
 Questions:
 
@@ -180,7 +183,7 @@ type is giving food to a bee. An example of an effect is mortality, and
 the measurement is a more detailed analysis of the effect.
 
 We converted all these selected categorical variables to factors to prep
-for analysis. In the next step, we processed two data frames -- oall bee
+for analysis. In the next step, we processed two data frames -- all bee
 species and all non-bee species. The split resulted in 2529 non-bee
 observations and 1407 bee observations. Lastly we added a mortality
 column using an ifelse statement. We did this to run a binomial glm in
@@ -829,12 +832,72 @@ Chemical & None \\
 \hypertarget{summary-and-conclusions}{%
 \section{Summary and Conclusions}\label{summary-and-conclusions}}
 
+We found that the exposure technique influenced the mortality
+predictiveness of the neonicotinoids on the species in our dataset. Our
+model showed that topical exposure had a significant effect on mortality
+for bee species, but the pseudo R-squared suggests that the model might
+not be a goof fit to the data. Our model for exposure techniques on non
+bee species shows that several exposure techniques significantly
+affected mortality. The pseudo R-squared value of .214 suggests that
+this model is a good fit. Regarding the data on chemical types, our
+models showed that no chemical had a significant effect on non-bee
+species mortality. For bee species, we did find several chemical types
+that had a significant effect on mortality, but this model also had a
+low pseudo R-squared and may not be the most predictive for our data.
+Given our data on exposure types and their effects on bee and non-bee
+mortality, we suggest that spray exposure techniques could maximize the
+effectiveness on reducing unwanted pests while preventing mortality on
+bees.
+
 \newpage
 
-\hypertarget{references}{%
-\section{References}\label{references}}
+\hypertarget{appendix}{%
+\section{Appendix}\label{appendix}}
 
-\textless add references here if relevant, otherwise delete this
-section\textgreater{}
+\begin{verbatim}
+## Warning in sqrt(crit * p * (1 - hh)/hh): NaNs produced
+
+## Warning in sqrt(crit * p * (1 - hh)/hh): NaNs produced
+\end{verbatim}
+
+\begin{figure}
+\centering
+\includegraphics{UpdatedwithModel_files/figure-latex/unnamed-chunk-8-1.pdf}
+\caption{Residual Plot for Bee Mortality by Exposure Type}
+\end{figure}
+
+\begin{verbatim}
+## Warning: not plotting observations with leverage one:
+##   1437
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in sqrt(crit * p * (1 - hh)/hh): NaNs produced
+
+## Warning in sqrt(crit * p * (1 - hh)/hh): NaNs produced
+\end{verbatim}
+
+\begin{figure}
+\centering
+\includegraphics{UpdatedwithModel_files/figure-latex/unnamed-chunk-9-1.pdf}
+\caption{Residual Plot for Non-Bee Mortality by Exposure Type}
+\end{figure}
+
+\begin{verbatim}
+## Warning: not plotting observations with leverage one:
+##   880
+\end{verbatim}
+
+\begin{figure}
+\centering
+\includegraphics{UpdatedwithModel_files/figure-latex/unnamed-chunk-10-1.pdf}
+\caption{Residual Plot for Bee Mortality by Chemical Type}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{UpdatedwithModel_files/figure-latex/unnamed-chunk-11-1.pdf}
+\caption{Residual Plot for Non-Bee Mortality by Chemical Type}
+\end{figure}
 
 \end{document}

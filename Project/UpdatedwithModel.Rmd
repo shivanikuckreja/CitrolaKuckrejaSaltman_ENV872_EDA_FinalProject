@@ -121,7 +121,7 @@ Retrieved From | https://cfpub.epa.gov/ecotox/help.cfm
 ------- | ---------
 Date Range | 1982-2019
 
-```{r}
+```{r echo=FALSE, tab.cap = "Data Summary"}
 kable(sapply(Processed1_Filter, class))
 ```
 
