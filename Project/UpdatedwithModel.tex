@@ -186,26 +186,38 @@ observations and 1407 bee observations. Lastly we added a mortality
 column using an ifelse statement. We did this to run a binomial glm in
 our analysis. We coded mortality as 1 and everything else as 0.
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.44}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.56}}@{}}
+\begin{longtable}[]{@{}ll@{}}
 \toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Detail
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Description
-\end{minipage} \\
+Detail & Description \\
 \midrule
 \endhead
 Data Source & EPA ECOTOX Knowledgebase \\
 ------- & --------- \\
 Retrieved From & \url{https://cfpub.epa.gov/ecotox/help.cfm} \\
 ------- & --------- \\
-Variables Used & Chemical Number, Chemical Name, Species Common Name,
-Organism Lifestage, Organism Age, Exposure Type, Effect, Effect
-Measurement \\
-------- & --------- \\
 Date Range & 1982-2019 \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{kable}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(Processed1\_Filter, class))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+& x \\
+\midrule
+\endhead
+CAS.Number & factor \\
+Chemical.Name & factor \\
+Species.Common.Name & factor \\
+Organism.Lifestage & factor \\
+Organism.Age & factor \\
+Exposure.Type & factor \\
+Effect & factor \\
+Effect.Measurement & factor \\
 \bottomrule
 \end{longtable}
 
@@ -411,6 +423,13 @@ bees. However, the only chemical that was not significant (150824478)
 only had one entry. The results of `logit4' showed that no chemical had
 a significant effect on non-bee species. The results of the four models
 are summarized in Table 1.
+
+We evaluated the goodness-of-fit by finding the McFadden pseudo
+R-squared~ for each model. The model for exposure type and non-bee
+mortality (`logit2') had a good fit with a McFadden pseudo R-squared
+value of .214. However, the rest of the models had very low pseudo
+R-squared values. As a result, these models may not provide the most
+predictive information.
 
 \hypertarget{question-1-is-there-an-exposure-type-that-is-more-likely-to-cause-mortality-for-bees-vs.-non-bee-insects}{%
 \subsection{Question 1: Is there an exposure type that is more likely to
@@ -652,6 +671,8 @@ Topical, general & 0.018538 \\
 \bottomrule
 \end{longtable}
 
+*Pseudo McFadden Score = 0.2142859
+
 \hypertarget{question-2-are-there-chemicals-that-are-more-likely-to-cause-mortality-for-bees-vs.-non-bee-insects}{%
 \subsection{Question 2: Are there chemicals that are more likely to
 cause mortality for bees vs.~non-bee
@@ -730,6 +751,8 @@ Chemical Effect on Bees & Pr(\textgreater{} \\
 \bottomrule
 \end{longtable}
 
+*Pseudo McFadden Score = 0.03867201
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#Which exposure types have a significant effect (mortality) on non bee species?}
@@ -798,6 +821,8 @@ Chemical Effect on Non-Bees & Pr(\textgreater{} \\
 Chemical & None \\
 \bottomrule
 \end{longtable}
+
+*Pseudo McFadden Score = 4.373360e-02
 
 \newpage
 
