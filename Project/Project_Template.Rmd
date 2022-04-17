@@ -117,7 +117,7 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List - Sample N
 
 
  GGPlot_Bee_Mortality_Exposure <- ggplot(BeeMortalityExposureType) +
-   aes(x = Exposure.Type) +
+   aes(x = reorder(Exposure.Type, +Effect.Measurement), y = Effect.Measurement) +
    geom_bar(fill = "light blue") +
    xlab("Exposure Type") +
    ylab("Mortality Count") +
