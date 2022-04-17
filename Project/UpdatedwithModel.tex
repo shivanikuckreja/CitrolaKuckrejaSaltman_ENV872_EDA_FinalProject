@@ -386,6 +386,14 @@ supporting these observations. \newpage
 \hypertarget{analysis}{%
 \section{Analysis}\label{analysis}}
 
+We ran GLMs to analyze our categorical data. Using the if/else statement
+to create the mortality column, we were able to compare mortality
+against all other effects. We ran two GLMs for the bee category and two
+for the non-bee categories. The two types of GLMs we ran analyzed
+mortality against exposure type and mortality against chemical type.To
+understand if this regression was a fit, we ran a pseudo regression
+using the pR2 function on each GLM as well
+
 \hypertarget{question-1-is-there-an-exposure-type-that-is-more-likely-to-cause-mortality-for-bees-vs.-non-bee-insects}{%
 \subsection{Question 1: Is there an exposure type that is more likely to
 cause mortality for bees vs.~non-bee
@@ -478,6 +486,15 @@ insects?}\label{question-1-is-there-an-exposure-type-that-is-more-likely-to-caus
 ##          r2CU 
 ##    0.12934540
 \end{verbatim}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Exposure Effect on Bees & Pr(\textgreater{} \\
+\midrule
+\endhead
+Topical, general & 0.009 ** \\
+\bottomrule
+\end{longtable}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -598,6 +615,23 @@ insects?}\label{question-1-is-there-an-exposure-type-that-is-more-likely-to-caus
 ##     0.3321160
 \end{verbatim}
 
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Non-Bee Exposure Type & Pr(\textgreater{} \\
+\midrule
+\endhead
+Dipped or soaked & 0.003227 \\
+Direct application & 3.42e-05 \\
+Drinking water & 0.021404 \\
+Environmental, unspecified & 0.000278 \\
+Foliar spray & 3.14e-11 \\
+Ground spray & 1.15e-06 \\
+Hand spray & 3.41e-09 \\
+Spray & 2.16e-08 \\
+Topical, general & 0.018538 \\
+\bottomrule
+\end{longtable}
+
 \hypertarget{question-2-are-there-chemicals-that-are-more-likely-to-cause-mortality-for-bees-vs.-non-bee-insects}{%
 \subsection{Question 2: Are there chemicals that are more likely to
 cause mortality for bees vs.~non-bee
@@ -663,6 +697,19 @@ insects?}\label{question-2-are-there-chemicals-that-are-more-likely-to-cause-mor
 ##    0.06611832
 \end{verbatim}
 
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Chemical Effect on Bees & Pr(\textgreater{} \\
+\midrule
+\endhead
+135410207 & 9.10e-06 *** \\
+138261413 & 6.39e-07 *** \\
+153719234 & 0.017062 * \\
+165252700 & 0.003599 ** \\
+210880925 & 0.000189 *** \\
+\bottomrule
+\end{longtable}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#Which exposure types have a significant effect (mortality) on non bee species?}
@@ -722,6 +769,15 @@ insects?}\label{question-2-are-there-chemicals-that-are-more-likely-to-cause-mor
 ##          r2CU 
 ##  7.536291e-02
 \end{verbatim}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Chemical Effect on Non-Bees & Pr(\textgreater{} \\
+\midrule
+\endhead
+Chemical & None \\
+\bottomrule
+\end{longtable}
 
 \newpage
 
