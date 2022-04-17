@@ -50,7 +50,9 @@ Original_ECOTOX_CSV <- read.csv("./Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.cs
 
 # Rationale and Research Questions
 
-**Pollination is a critical component of agriculture. Bees are important pollinators. Our research looks to see if there are exposure methods and chemicals that do not cause significant harm to bees while eliminating pests. The goal of our research is to determine potential treatment methods that reduce pests while having little to no impact on bees.**
+**Pollination is a critical component of agriculture. Bees are important pollinators, however, a decline in pollinators has been linked to extensive use of insecticides. Measuring hazardous and lethal toxicity as well as potential side effects for various pollinators could be utilized for research or management recommendations. Our analysis evaluates if there are exposure methods and chemicals that do not cause significant harm to bees while eliminating pests. The goal of our analysis is to determine potential treatment methods that reduce pests while having a non-lethal impact on bees.**
+
+
 
 Questions:
 
@@ -355,5 +357,24 @@ no chemical had a significant effect on non-bee species mortality. For bee speci
 
 \newpage
 
-# References
-<add references here if relevant, otherwise delete this section> 
+# Appendix
+```{r echo=FALSE, fig.cap = "Residual Plot for Bee Mortality by Exposure Type"}
+par(mfrow=c(2,2))
+plot(logit)
+```
+
+```{r echo=FALSE, fig.cap = "Residual Plot for Non-Bee Mortality by Exposure Type"}
+par(mfrow=c(2,2))
+plot(logit2)
+```
+
+```{r echo=FALSE, fig.cap = "Residual Plot for Bee Mortality by Chemical Type"}
+par(mfrow=c(2,2))
+plot(logit3)
+```
+
+```{r echo=FALSE, fig.cap = "Residual Plot for Non-Bee Mortality by Chemical Type"}
+par(mfrow=c(2,2))
+plot(logit4)
+```
+
