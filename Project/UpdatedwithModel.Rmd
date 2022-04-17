@@ -223,6 +223,7 @@ The ‘logit’ model evaluated the effect of exposure type on mortality on bee 
 
 The ‘logit3’ and ‘logit4’ models evaluated which chemical types have a lethal effect on bee and non bee species. The results of ‘logit3’ showed that nearly all chemical types with data had a significant effect on bees. However, the only chemical that was not significant (150824478) only had one entry. The results of ‘logit4’ showed that no chemical had a significant effect on non-bee species. The results of the four models are summarized in Table 1. 
 
+We evaluated the goodness-of-fit by finding the McFadden pseudo R-squared  for each model. The model for exposure type and non-bee mortality (‘logit2’) had a good fit with a McFadden pseudo R-squared value of .214. However, the rest of the models had very low pseudo R-squared values. As a result, these models may not provide the most predictive information. 
 
 ## Question 1: Is there an exposure type that is more likely to cause mortality for bees vs. non-bee insects?
 
