@@ -138,7 +138,7 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List - Sample N
  
    #attempt 2
   GGPlot_Bee_Mortality_Exposure <- ggplot(BeeMortalityExposureType) +
-   aes(x = reorder(Exposure.Type, Mortality), y = Mortality) +
+   aes(x = reorder(Exposure.Type, - Effect), y = Effect) +
    geom_bar(fill = "light blue") +
    xlab("Exposure Type") +
    ylab("Mortality Count") +
@@ -149,6 +149,39 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List - Sample N
  #attempt 3
   GGPlot_Bee_Mortality_Exposure <- ggplot(BeeMortalityExposureType) +
    aes(x = reorder("Exposure Type", -"Mortality Count", ylab ="Mortality Count")) +
+   geom_bar(fill = "light blue") +
+   xlab("Exposure Type") +
+   ylab("Mortality Count") +
+   theme(axis.text.x = element_text(angle = 90))
+ print(GGPlot_Bee_Mortality_Exposure)
+ 
+ 
+ 
+ 
+ #FROM GOOGLE 
+ # reorder is close to order, but is made to change the order of the factor levels.
+mpg$class = with(mpg, reorder(class, hwy, median))
+
+p <- mpg %>%
+  ggplot( aes(x=class, y=hwy, fill=class)) + 
+    geom_violin() +
+    xlab("class") +
+    theme(legend.position="none") +
+    xlab("")
+ 
+#attempt 4 based upon above code from Google
+
+Exposure.Type$Effect = with(Exposure.Type, reorder(Effect))
+
+Graph1 <- BeeMortalityExposureType %>%
+  ggplot(aes(x=Exposure.Type, y=Effect)) +
+    xlab("class") +
+    theme(legend.position="none") +
+    xlab("")
+
+#attempt 5
+  GGPlot_Bee_Mortality_Exposure <- ggplot(BeeMortalityExposureType) +
+   aes(x = reorder(Exposure.Type, - Effect), y = Effect) +
    geom_bar(fill = "light blue") +
    xlab("Exposure Type") +
    ylab("Mortality Count") +
