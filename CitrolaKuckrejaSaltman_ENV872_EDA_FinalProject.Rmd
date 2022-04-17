@@ -1,0 +1,401 @@
+---
+output: 
+  pdf_document:
+    keep_tex: yes
+    fig_caption: yes
+    number_sections: yes
+geometry: margin=2.54cm
+title: "Effective Pest Treament That Protects Pollinators"
+subtitle: "https://github.com/shivanikuckreja/CitrolaKuckrejaSaltman_ENV872_EDA_FinalProject/tree/main/Project"
+author: "Sam Saltman, Shivani Kuckreja, Jessica Citrola"
+fontsize: 12pt
+mainfont: Times New Roman
+editor_options: 
+  chunk_output_type: console
+---
+
+\newpage
+\tableofcontents 
+\newpage
+\listoftables 
+\newpage
+\listoffigures 
+\newpage
+
+```{r setup, include=FALSE}
+# Set your working directory
+getwd()
+# Load your packages
+#install.packages("forcats")
+library(viridis)
+library(tidyverse)
+library(lubridate)
+library(knitr)
+library(ggplot2)
+library(RColorBrewer)
+library(pscl)
+library(forcats)
+
+# Set your ggplot theme
+mytheme <- theme_classic() +
+  theme(axis.text = element_text(color = "black"), 
+        legend.position = "left")
+theme_set(mytheme)
+
+# Load your datasets 
+
+Original_ECOTOX_CSV <- read.csv("./Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.csv", stringsAsFactors = TRUE)
+```
+
+
+# Rationale and Research Questions
+
+**Pollination is a critical component of agriculture. Bees are important pollinators, however, a decline in pollinators has been linked to extensive use of insecticides. Measuring hazardous and lethal toxicity as well as potential side effects for various pollinators could be utilized for research or management recommendations. Our analysis evaluates if there are exposure methods and chemicals that do not cause significant harm to bees while eliminating pests. The goal of our analysis is to determine potential treatment methods that reduce pests while having a non-lethal impact on bees.**
+
+
+
+Questions:
+
+1.   _Is there an exposure type that is more likely to cause mortality for bees vs. non-bee insects?_
+
+2.   _Are there chemicals that are more likely to cause mortality for bees vs. non-bee insects?_
+  
+
+\newpage
+
+# Dataset Information
+
+Data Source: The dataset was pulled from a repository created for Environmental 
+Data Analytics at Duke University in 2020. The data collected is from several 
+EPA studies on neonicotinoids and their effects on insects. The data we will be 
+analyzing is the type of chemical administered, how it was administered, and 
+how both of these variables impact insects. 
+
+In the wrangling process, we selected the relevant information to our topic. 
+This includes the chemical type, chemical number, insect species, lifestage and age of the species, 
+exposure type, the effect of the exposure and the measurement of the exposure. An example of an exposure type is giving food to a bee. An example of an effect is mortality, and the measurement is a more detailed analysis of the effect. 
+
+We converted all these selected categorical variables to factors to prep for analysis. In the next step, we processed two data frames – all bee species and all non-bee species. The split resulted in 2529 non-bee observations and 1407 bee observations. Lastly we added a mortality column using an ifelse statement. We did this to run a binomial glm in our analysis. We coded mortality as 1 and everything else as 0. 
+
+
+```{r echo=FALSE}
+Processed1_Filter <- Original_ECOTOX_CSV %>%
+  select(CAS.Number, Chemical.Name, Species.Common.Name, Organism.Lifestage, Organism.Age, Exposure.Type, Effect, Effect.Measurement) 
+
+#Making all columns categorical
+Processed1_Filter$CAS.Number <- as.factor(Processed1_Filter$CAS.Number)
+Processed1_Filter$Chemical.Name <- as.factor(Processed1_Filter$Chemical.Name)
+Processed1_Filter$Species.Common.Name <- as.factor(Processed1_Filter$Species.Common.Name)
+Processed1_Filter$Organism.Lifestage <- as.factor(Processed1_Filter$Organism.Lifestage)
+Processed1_Filter$Organism.Age <- as.factor(Processed1_Filter$Organism.Age)
+Processed1_Filter$Exposure.Type <- as.factor(Processed1_Filter$Exposure.Type)
+Processed1_Filter$Effect <- as.factor(Processed1_Filter$Effect)
+Processed1_Filter$Effect.Measurement <- as.factor(Processed1_Filter$Effect.Measurement)
+
+#Processed1_Filter$CAS.Number <- as.factor(Processed1_Filter$CAS.Number)
+
+write.csv(Processed1_Filter, row.names = FALSE, file = "./Data/Processed/ProcessedForColumns")
+
+#Mortality <- Processed1_Filter %>%
+  #filter(Effect == "Mortality")
+
+ BeeMortalityExposureType <- Processed1_Filter %>%
+  filter(Species.Common.Name == "Honey Bee" | Species.Common.Name == "Buff Tailed Bumblebee" | Species.Common.Name == "Carniolan Honey Bee" | Species.Common.Name == "Bumble Bee" | Species.Common.Name == "Italian Honeybee" | Species.Common.Name == "European Dark Bee" | Species.Common.Name == "Buff-tailed Bumblebee" | Species.Common.Name =="Stingless Bee"| Species.Common.Name == "Mason Bee")
+ 
+ write.csv(BeeMortalityExposureType, row.names = FALSE, file = "./Data/Processed/BeeMortality")
+ 
+  NonBeeMortalityExposure <- Processed1_Filter %>%
+  filter(Species.Common.Name == "Japanese Beetle" | Species.Common.Name == "Wireworm" | Species.Common.Name == "Asian Citrus Psyllid" | Species.Common.Name == "Parasitoid Wasp" | Species.Common.Name =="Snout Beetle Family, Weevil" | Species.Common.Name =="Sweetpotato Whitefly" | Species.Common.Name =="Predatory Mite" | Species.Common.Name =="Scarab Beetle" | Species.Common.Name =="Ground Beetle Family" | Species.Common.Name =="Chalcid Wasp" | Species.Common.Name =="Spider/Mite Class" | Species.Common.Name =="Ladybird Beetle" | Species.Common.Name =="Argentine Ant" | Species.Common.Name =="Horned Oak Gall Wasp" | Species.Common.Name =="Tooth-necked Fungus Beetle" | Species.Common.Name =="Calico Scale" | Species.Common.Name =="Minute Parasitic Wasps" | Species.Common.Name =="Silkworm" | Species.Common.Name =="Moth And Butterfly Order" | Species.Common.Name =="Hemlock Wooly Adelgid" | Species.Common.Name =="Western Flower Thrips" | Species.Common.Name =="House Fly" | Species.Common.Name =="Spined Soldier Bug" | Species.Common.Name =="Eulophid Wasp" | Species.Common.Name =="Yellow Fever Mosquito" | Species.Common.Name =="Eastern Subterranean Termite" | Species.Common.Name =="Pea Aphid" | Species.Common.Name =="Glasshouse Potato Wasp" | Species.Common.Name =="Two Spotted Lady Beetle" | Species.Common.Name =="(Other)" | Species.Common.Name =="Parasitic Wasp" | Species.Common.Name =="Asian Lady Beetle" | Species.Common.Name =="Parastic Wasp" | Species.Common.Name =="Erythrina Gall Wasp" | Species.Common.Name =="Sevenspotted Lady Beetle" | Species.Common.Name =="Aphid Family" | Species.Common.Name =="Braconid Wasp" | Species.Common.Name =="Ladybird Beetle Family" | Species.Common.Name =="Spring Tiphia" | Species.Common.Name =="Rove Beetle Family" | Species.Common.Name =="Convergent Lady Beetle" | Species.Common.Name =="Tobacco Flea Beetle" | Species.Common.Name =="Beetle" | Species.Common.Name =="Leaf Beetle Family" |Species.Common.Name =="Codling Moth" | Species.Common.Name =="Fairyfly Parasitoid" | Species.Common.Name =="Mirid Bug" | Species.Common.Name =="Vedalia Beetle" | Species.Common.Name =="Egg Parasitoid" | Species.Common.Name =="Oystershell Scale Parasitoid" | Species.Common.Name =="Mite" | Species.Common.Name =="Corn Earworm" |Species.Common.Name =="Ox Beetle" | Species.Common.Name =="Armoured Scale Family" | Species.Common.Name =="Monarch Butterfly" | Species.Common.Name =="Braconid Parasitoid" | Species.Common.Name =="Jassid" | Species.Common.Name =="Pond Wolf Spider" | Species.Common.Name =="Lacewing" | Species.Common.Name =="Ant Family" |Species.Common.Name =="Euonymus Scale" | Species.Common.Name =="Minute Pirate Bug" | Species.Common.Name =="Colorado Potato Beetle" | Species.Common.Name =="Beetle Order" | Species.Common.Name =="True Bug Order" | Species.Common.Name =="Cotton Aphid" | Species.Common.Name =="" | Species.Common.Name =="" |Species.Common.Name =="Thrip Order" | Species.Common.Name =="Cabbage Looper" | Species.Common.Name =="Parasitoid" | Species.Common.Name =="Tobacco Aphid" | Species.Common.Name =="Citrus Leafminer" | Species.Common.Name =="Mosquito" | Species.Common.Name =="Flatheaded Appletree Borer" | Species.Common.Name =="Potato Leafhopper" |Species.Common.Name =="Black-spotted Lady Beetle" | Species.Common.Name =="Lady Beetle" | Species.Common.Name =="Mulberry Pyralid" | Species.Common.Name =="Araneoid Spider Order" | Species.Common.Name =="Insect Class" | Species.Common.Name =="Hemlock Woolly Adelgid Lady Beetle" | Species.Common.Name =="Onion Thrip" | Species.Common.Name =="Green Peach Aphid" |Species.Common.Name =="Red Scale Parasite" | Species.Common.Name =="Diamondback Moth" | Species.Common.Name =="Predatory Bug" | Species.Common.Name =="Common Thrip" | Species.Common.Name =="Mite Order" | Species.Common.Name =="Spotless Ladybird Beetle" | Species.Common.Name =="Southern House Mosquito" | Species.Common.Name =="Apple Maggot")
+  
+ write.csv(NonBeeMortalityExposure, row.names = FALSE, file = "./Data/Processed/NonBeeMortality")
+
+```
+
+
+
+Detail | Description
+------- | ---------
+Data Source | EPA ECOTOX Knowledgebase
+------- | ---------
+Retrieved From | https://cfpub.epa.gov/ecotox/help.cfm
+------- | ---------
+Date Range | 1982-2019 
+
+
+```{r echo=FALSE, tab.cap = "Summary Data"}
+
+
+kable(sapply(Processed1_Filter, class), caption = "Summary Data")
+
+
+```
+
+\newpage
+
+# Exploratory Analysis 
+
+Summary of all species in study
+```{r echo=FALSE, tab.cap = "Species List - Sample Number"}
+
+kable(summary(Processed1_Filter$Species.Common.Name), caption = "Species List")
+```
+
+\newpage
+Bar chart comparing exposure type to mortality count of bees. It initially looked like bees are more likely to die when chemical exposure comes from consuming food.The other exposure types do not look particularly significant
+
+
+```{r bee exposure, echo=FALSE, fig.cap = "Bee Mortality by Exposure Type", warning=FALSE}
+
+GGPlotMortalityBeeFilter <- BeeMortalityExposureType %>%
+  filter(Effect == "Mortality")
+ 
+GGPlotMortalityNonBeeFilter <- NonBeeMortalityExposure %>%
+  filter(Effect == "Mortality")
+
+
+ GGPlot_Bee_Mortality_Exposure <- ggplot(GGPlotMortalityBeeFilter) +
+   aes(x = fct_infreq(Exposure.Type)) +
+   geom_bar(aes(color = Exposure.Type, fill = Exposure.Type)) + #deleted method, unsure why it's there
+   scale_fill_viridis(discrete = TRUE, option = "B") +
+   xlab("Exposure Type") +
+   ylab("Mortality Count") +
+   theme(axis.text.x = element_text(angle = 90)) 
+ print(GGPlot_Bee_Mortality_Exposure)
+ 
+ 
+```
+
+
+\newpage
+Bar chart comparing exposure type to mortality count of non-bees. Exposure from an environmental source appears more lethal to non-bees species. 
+
+```{r non bee exposure, echo=FALSE, fig.cap = "Non-bee Mortality by Exposure Type", warning=FALSE}
+ 
+ 
+ GGPlot_NonBee_Mortality_Exposure <- ggplot(GGPlotMortalityNonBeeFilter) +
+   aes(x = fct_infreq(Exposure.Type)) +
+   geom_bar(aes(color = Exposure.Type, fill = Exposure.Type)) +
+   scale_fill_viridis(discrete = TRUE, option = "B") +
+   ylab("Mortality Count") +
+   xlab("Exposure Type") +
+   theme(axis.text.x = element_text(angle = 90))
+ print(GGPlot_NonBee_Mortality_Exposure)
+ 
+ 
+```
+
+
+\newpage
+The next area of exploration was looking into how many bee and non-bee samples died from exposure to certain chemical compounds. We used the chemical number as the chemical names are complex.
+
+This bar chart looking at bees suggests that three types of chemical compounds in this dataset are toxic to bees.
+
+```{r bee chemical, echo=FALSE, fig.cap = "Bee Mortality by Chemical", warning=FALSE}
+ 
+GGPlot_Bee_Mortality_Chemical <- ggplot(GGPlotMortalityBeeFilter) +
+   aes(x = fct_infreq(CAS.Number)) +
+   geom_bar(aes(color = CAS.Number, fill = CAS.Number)) +
+   scale_fill_viridis(discrete = TRUE, option = "B") +
+   xlab("Chemical") +
+   ylab("Mortality Count") +
+   theme(axis.text.x = element_text(angle = 90))
+ print( GGPlot_Bee_Mortality_Chemical)
+ 
+ 
+```
+
+
+\newpage
+This bar chart looking at bees suggests that three types of chemical compounds in this dataset are toxic to non-bees.
+
+
+```{r non bee chemical, echo=FALSE, fig.cap = "Non-bee Mortality by Chemical", warning=FALSE}
+ 
+GGPlot_NonBee_Mortality_Chemical <- ggplot(GGPlotMortalityNonBeeFilter) +
+   aes(x = fct_infreq(CAS.Number)) +
+   geom_bar(aes(color = CAS.Number, fill = CAS.Number)) +
+   scale_fill_viridis(discrete = TRUE, option = "B") +
+   ylab("Mortality Count") +
+   xlab("Chemical") +
+   theme(axis.text.x = element_text(angle = 90))
+ print(GGPlot_NonBee_Mortality_Chemical)
+ 
+ 
+```
+
+Next we analyze to see if there is any statistical significance supporting these observations.
+\newpage
+
+# Analysis
+
+We ran GLMs to analyze our categorical data. Using the if/else statement to create the mortality column, we were able to compare mortality against all other effects. We ran two GLMs for the bee category and two for the non-bee categories. The two types of GLMs we ran analyzed mortality against exposure type and mortality against chemical type.To understand if this regression was a fit, we ran a pseudo regression using the pR2 function on each GLM as well
+
+The ‘logit’ model evaluated the effect of exposure type on mortality on bee species. The results of this model showed that topical exposure had a significant effect on bee mortality (p=.009). For every one unit change in topical, the odds of mortality increase by 1.1787. In comparison to non-bee species, ‘logit2’ had various exposure types that had a significant effect on mortality. The significant exposure types included dipped or soaked, direct application, drinking water, environmental (unspecified), foliar spray, ground spray, hand spray, spray, and topical. 
+
+The ‘logit3’ and ‘logit4’ models evaluated which chemical types have a lethal effect on bee and non bee species. The results of ‘logit3’ showed that nearly all chemical types with data had a significant effect on bees. However, the only chemical that was not significant (150824478) only had one entry. The results of ‘logit4’ showed that no chemical had a significant effect on non-bee species. The results of the four models are summarized in the tables below. 
+
+We evaluated the goodness-of-fit by finding the McFadden pseudo R-squared for each model. The model for exposure type and non-bee mortality (‘logit2’) had a good fit with a McFadden pseudo R-squared value of .214. However, the rest of the models had very low pseudo R-squared values. As a result, these models may not provide the most predictive information. 
+
+## Question 1: Is there an exposure type that is more likely to cause mortality for bees vs. non-bee insects?
+
+```{r include=FALSE}
+
+#Which exposure types have a significant effect (mortality) on bee species?
+BeeMortalityExposureType$Mortality <- ifelse(BeeMortalityExposureType$Effect=="Mortality", 1, 0) 
+
+#Making new column categorical
+BeeMortalityExposureType$Mortality <- as.factor(BeeMortalityExposureType$Mortality)
+
+logit <- glm(Mortality ~ Exposure.Type, data = BeeMortalityExposureType, family = "binomial")
+summary(logit)
+
+#For every one unit change in Topical, the odds of mortality increase by 1.1787. The P value of topical exposure type is 0.009, and is statistically significant.
+#Significance: Total topical samples 99 - mortality - 65
+#Additional data collection is needed on: Exposure through soil contact, drinking
+
+#Pseudo R2
+ pR2(logit)
+
+```
+**Results of Statistical Analysis on Exposure Type and Mortality on Bees**
+
+Exposure Effect on Bees |Pr(>|z|) 
+------- | ---------
+Topical, general | 0.009 **
+
+*Pseudo McFadden Score = 0.07748671 
+
+```{r include=FALSE}
+
+#Which exposure types have a significant effect (mortality) on non bee species?
+
+NonBeeMortalityExposure$Mortality <- ifelse(NonBeeMortalityExposure$Effect=="Mortality", 1, 0) 
+
+#Making new column categorical
+NonBeeMortalityExposure$Mortality <- as.factor(NonBeeMortalityExposure$Mortality)
+
+logit2 <- glm(Mortality ~ Exposure.Type, data = NonBeeMortalityExposure, family = "binomial")
+summary(logit2)
+
+#Dipped or soaked, Direct application, Environmental- unspecified, Foliar spray, Ground spray, Hand spray, Spray, and Topical, general are all significant 
+#Plenty of samples for non-bees - correlations  
+#Conclusion: Spray could be an effective anthropogenic exposure technique to eliminate pests and preserve bees. Direct application like topical techniques should be avoided as they significantly harm all species. There appears to be environmental exposure types that can promote desired effect as well.
+
+#Pseudo R2
+ pR2(logit2)
+
+
+```
+**Results of Statistical Analysis on Exposure Type and Mortality on Non-bees**
+
+ Non-Bee Exposure Type | Pr(>|z|)
+  ------- | ---------
+Dipped or soaked      |                            0.003227
+Direct application     |                           3.42e-05
+Drinking water          |                          0.021404
+Environmental, unspecified |                        0.000278
+Foliar spray                |                      3.14e-11
+Ground spray                 |                    1.15e-06
+Hand spray                    |                   3.41e-09
+Spray                          |                  2.16e-08
+Topical, general                |                   0.018538
+
+*Pseudo McFadden Score = 0.2142859
+
+
+## Question 2: Are there chemicals that are more likely to cause mortality for bees vs. non-bee insects?
+```{r include=FALSE}
+
+#Which chemical types have a significant effect (mortality) on bee species?
+
+logit3 <- glm(Mortality ~ CAS.Number, data = BeeMortalityExposureType, family = "binomial")
+summary(logit3)
+
+ #Need more data on 58842209 105843365 and 58842209, 150824478
+ # Every other chemical is statistically significant - 111988499 135410207 138261413  153719234 165252700 210880925 
+
+#Pseudo R2
+ pR2(logit3)
+```
+**Results of Statistical Analysis on Chemical Types and Mortality on Bees**
+
+Chemical Effect on Bees  |    Pr(>|z|)
+------- | ---------
+135410207  |  9.10e-06 ***
+138261413  |   6.39e-07 ***
+153719234  |   0.017062 *  
+165252700  |   0.003599 ** 
+210880925  |   0.000189 ***
+
+*Pseudo McFadden Score = 0.03867201
+
+
+```{r include=FALSE}
+#Which exposure types have a significant effect (mortality) on non bee species?
+
+logit4 <- glm(Mortality ~ CAS.Number, data = NonBeeMortalityExposure, family = "binomial")
+summary(logit4)
+
+#There is no chemical that is effective at eliminating all non-bee species. 
+#Conclusion - exposure mechanism of chemical is a more reliable factor at understanding mortality than chemical itself. Bees do not respond well to any of the adminstered chemicals. Any treatment should focus on using the chemicals in ways that are ineffective at exposing bees and effective at exposing nonbees
+
+#Pseudo R2
+ pR2(logit4)
+```
+**Results of Statistical Analysis on Chemical Types and Mortality on Non-bees**
+
+Chemical Effect on Non-Bees |Pr(>|z|)
+------- | ---------
+Chemical | None
+
+*Pseudo McFadden Score = 4.373360e-02
+
+\newpage
+
+# Summary and Conclusions
+
+We found that the exposure technique influenced the mortality predictiveness of the neonicotinoids on the species in our dataset. Our model showed that topical exposure had a significant effect on mortality for bee species, but the pseudo R-squared suggests that the model might not be a good fit to the data. Our model for exposure techniques on non bee species shows that several exposure techniques significantly affected mortality.  The pseudo R-squared value of .214 suggests that this model is a good fit. Regarding the data on chemical types, our models showed that 
+no chemical had a significant effect on non-bee species mortality. For bee species, we did find several chemical types that had a significant effect on mortality, but this model also had a low pseudo R-squared and may not be the most predictive for our data. Given our data on exposure types and their effects on bee and non-bee mortality, we suggest that spray exposure techniques could maximize the effectiveness on reducing unwanted pests while preventing mortality on bees. 
+
+
+
+
+
+
+
+\newpage
+
+# Appendix
+```{r echo=FALSE, fig.cap = "Residual Plot for Bee Mortality by Exposure Type", warning=FALSE}
+par(mfrow=c(2,2))
+plot(logit)
+
+```
+
+
+\newpage
+
+
+```{r echo=FALSE, fig.cap = "Residual Plot for Non-Bee Mortality by Exposure Type", warning=FALSE}
+par(mfrow=c(2,2))
+plot(logit2)
+```
+
+
+\newpage
+
+
+```{r echo=FALSE, fig.cap = "Residual Plot for Bee Mortality by Chemical Type", warning=FALSE}
+par(mfrow=c(2,2))
+plot(logit3)
+```
+
+
+\newpage
+
+
+```{r echo=FALSE, fig.cap = "Residual Plot for Non-Bee Mortality by Chemical Type", warning=FALSE}
+par(mfrow=c(2,2))
+plot(logit4)
+```
+
