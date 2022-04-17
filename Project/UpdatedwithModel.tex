@@ -55,46 +55,6 @@
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=2.54cm]{geometry}
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\BuiltInTok}[1]{#1}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
-\newcommand{\ExtensionTok}[1]{#1}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\ImportTok}[1]{#1}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\NormalTok}[1]{#1}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
@@ -190,6 +150,11 @@ column using an ifelse statement. We did this to run a binomial glm in
 our analysis. We coded mortality as 1 and everything else as 0.
 
 \begin{longtable}[]{@{}ll@{}}
+\caption{Summary Data}\tabularnewline
+\toprule
+Detail & Description \\
+\midrule
+\endfirsthead
 \toprule
 Detail & Description \\
 \midrule
@@ -201,12 +166,6 @@ Retrieved From & \url{https://cfpub.epa.gov/ecotox/help.cfm} \\
 Date Range & 1982-2019 \\
 \bottomrule
 \end{longtable}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{kable}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(Processed1\_Filter, class))}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{longtable}[]{@{}ll@{}}
 \toprule
@@ -425,10 +384,10 @@ that nearly all chemical types with data had a significant effect on
 bees. However, the only chemical that was not significant (150824478)
 only had one entry. The results of `logit4' showed that no chemical had
 a significant effect on non-bee species. The results of the four models
-are summarized in Table 1.
+are summarized in the tables below.
 
 We evaluated the goodness-of-fit by finding the McFadden pseudo
-R-squared~ for each model. The model for exposure type and non-bee
+R-squared for each model. The model for exposure type and non-bee
 mortality (`logit2') had a good fit with a McFadden pseudo R-squared
 value of .214. However, the rest of the models had very low pseudo
 R-squared values. As a result, these models may not provide the most
@@ -439,93 +398,8 @@ predictive information.
 cause mortality for bees vs.~non-bee
 insects?}\label{question-1-is-there-an-exposure-type-that-is-more-likely-to-cause-mortality-for-bees-vs.-non-bee-insects}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#Which exposure types have a significant effect (mortality) on bee species?}
-\NormalTok{BeeMortalityExposureType}\SpecialCharTok{$}\NormalTok{Mortality }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(BeeMortalityExposureType}\SpecialCharTok{$}\NormalTok{Effect}\SpecialCharTok{==}\StringTok{"Mortality"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{) }
-
-\CommentTok{\#Making new column categorical}
-\NormalTok{BeeMortalityExposureType}\SpecialCharTok{$}\NormalTok{Mortality }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(BeeMortalityExposureType}\SpecialCharTok{$}\NormalTok{Mortality)}
-
-\NormalTok{logit }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(Mortality }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Exposure.Type, }\AttributeTok{data =}\NormalTok{ BeeMortalityExposureType, }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
-\FunctionTok{summary}\NormalTok{(logit)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## Call:
-## glm(formula = Mortality ~ Exposure.Type, family = "binomial", 
-##     data = BeeMortalityExposureType)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.4620  -0.7742  -0.7742   1.1774   1.9728  
-## 
-## Coefficients:
-##                                                          Estimate Std. Error
-## (Intercept)                                               -0.5306     0.3985
-## Exposure.TypeDermal                                       -0.8747     0.5046
-## Exposure.TypeDiet, unspecified                             0.5306     0.5836
-## Exposure.TypeDirect application                          -16.0354  1696.7344
-## Exposure.TypeDrinking water                               17.0967  2399.5448
-## Exposure.TypeDropwise                                     17.0967  2399.5448
-## Exposure.TypeEnvironmental, unspecified                    0.1252     0.4343
-## Exposure.TypeFood                                         -0.5208     0.4052
-## Exposure.TypeGround granular                             -16.0354  1073.1091
-## Exposure.TypeHand spray                                  -16.0354  1199.7724
-## Exposure.TypeMultiple routes between application groups   -1.2611     1.1513
-## Exposure.TypeOral via capsule                             17.0967   550.4935
-## Exposure.TypeSpray                                         0.2587     0.5186
-## Exposure.TypeTopical, general                              1.1787     0.4512
-##                                                         z value Pr(>|z|)   
-## (Intercept)                                              -1.331    0.183   
-## Exposure.TypeDermal                                      -1.734    0.083 . 
-## Exposure.TypeDiet, unspecified                            0.909    0.363   
-## Exposure.TypeDirect application                          -0.009    0.992   
-## Exposure.TypeDrinking water                               0.007    0.994   
-## Exposure.TypeDropwise                                     0.007    0.994   
-## Exposure.TypeEnvironmental, unspecified                   0.288    0.773   
-## Exposure.TypeFood                                        -1.285    0.199   
-## Exposure.TypeGround granular                             -0.015    0.988   
-## Exposure.TypeHand spray                                  -0.013    0.989   
-## Exposure.TypeMultiple routes between application groups  -1.095    0.273   
-## Exposure.TypeOral via capsule                             0.031    0.975   
-## Exposure.TypeSpray                                        0.499    0.618   
-## Exposure.TypeTopical, general                             2.612    0.009 **
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 1757.6  on 1406  degrees of freedom
-## Residual deviance: 1621.4  on 1393  degrees of freedom
-## AIC: 1649.4
-## 
-## Number of Fisher Scoring iterations: 15
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#For every one unit change in Topical, the odds of mortality increase by 1.1787. The P value of topical exposure type is 0.009, and is statistically significant.}
-\CommentTok{\#Significance: Total topical samples 99 {-} mortality {-} 65}
-\CommentTok{\#Additional data collection is needed on: Exposure through soil contact, drinking}
-
-\CommentTok{\#Pseudo R2}
- \FunctionTok{pR2}\NormalTok{(logit)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## fitting null model for pseudo-r2
-\end{verbatim}
-
-\begin{verbatim}
-##           llh       llhNull            G2      McFadden          r2ML 
-## -810.68616225 -878.77992574  136.18752697    0.07748671    0.09225597 
-##          r2CU 
-##    0.12934540
-\end{verbatim}
+\textbf{Results of Statistical Analysis on Exposure Type and Mortality
+on Bees}
 
 \begin{longtable}[]{@{}ll@{}}
 \toprule
@@ -538,124 +412,8 @@ Topical, general & 0.009 ** \\
 
 *Pseudo McFadden Score = 0.07748671
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#Which exposure types have a significant effect (mortality) on non bee species?}
-
-\NormalTok{NonBeeMortalityExposure}\SpecialCharTok{$}\NormalTok{Mortality }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(NonBeeMortalityExposure}\SpecialCharTok{$}\NormalTok{Effect}\SpecialCharTok{==}\StringTok{"Mortality"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{) }
-
-\CommentTok{\#Making new column categorical}
-\NormalTok{NonBeeMortalityExposure}\SpecialCharTok{$}\NormalTok{Mortality }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(NonBeeMortalityExposure}\SpecialCharTok{$}\NormalTok{Mortality)}
-
-\NormalTok{logit2 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(Mortality }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Exposure.Type, }\AttributeTok{data =}\NormalTok{ NonBeeMortalityExposure, }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
-\FunctionTok{summary}\NormalTok{(logit2)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## Call:
-## glm(formula = Mortality ~ Exposure.Type, family = "binomial", 
-##     data = NonBeeMortalityExposure)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -2.2581  -1.0150  -0.1775   1.2435   2.9497  
-## 
-## Coefficients:
-##                                                              Estimate
-## (Intercept)                                                    1.1896
-## Exposure.TypeDiet, unspecified                                -0.4964
-## Exposure.TypeDipped or soaked                                 -1.3921
-## Exposure.TypeDirect application                               -1.9780
-## Exposure.TypeDrinking water                                   -1.3437
-## Exposure.TypeEnvironmental, unspecified                       -1.5843
-## Exposure.TypeFilmcoating                                     -18.7557
-## Exposure.TypeFoliar spray                                     -5.5269
-## Exposure.TypeFood                                             -0.4814
-## Exposure.TypeGround granular                                 -18.7557
-## Exposure.TypeGround spray                                     -5.3327
-## Exposure.TypeHand spray                                       -2.8824
-## Exposure.TypeImmersion                                        16.3765
-## Exposure.TypeMisted                                          -18.7557
-## Exposure.TypeMultiple routes within environmental exposures  -18.7557
-## Exposure.TypePresent in soil                                 -18.7557
-## Exposure.TypeSpray                                            -2.5710
-## Exposure.TypeTopical, general                                  1.2785
-## Exposure.TypeWatered                                         -18.7557
-##                                                             Std. Error z value
-## (Intercept)                                                     0.4317   2.756
-## Exposure.TypeDiet, unspecified                                  0.9676  -0.513
-## Exposure.TypeDipped or soaked                                   0.4727  -2.945
-## Exposure.TypeDirect application                                 0.4774  -4.144
-## Exposure.TypeDrinking water                                     0.5840  -2.301
-## Exposure.TypeEnvironmental, unspecified                         0.4358  -3.635
-## Exposure.TypeFilmcoating                                     3956.1804  -0.005
-## Exposure.TypeFoliar spray                                       0.8324  -6.640
-## Exposure.TypeFood                                               0.4812  -1.000
-## Exposure.TypeGround granular                                  273.0027  -0.069
-## Exposure.TypeGround spray                                       1.0965  -4.864
-## Exposure.TypeHand spray                                         0.4877  -5.911
-## Exposure.TypeImmersion                                       3956.1804   0.004
-## Exposure.TypeMisted                                          1398.7210  -0.013
-## Exposure.TypeMultiple routes within environmental exposures  2797.4420  -0.007
-## Exposure.TypePresent in soil                                 2284.1018  -0.008
-## Exposure.TypeSpray                                              0.4592  -5.599
-## Exposure.TypeTopical, general                                   0.5430   2.355
-## Exposure.TypeWatered                                         1142.0510  -0.016
-##                                                             Pr(>|z|)    
-## (Intercept)                                                 0.005855 ** 
-## Exposure.TypeDiet, unspecified                              0.607926    
-## Exposure.TypeDipped or soaked                               0.003227 ** 
-## Exposure.TypeDirect application                             3.42e-05 ***
-## Exposure.TypeDrinking water                                 0.021404 *  
-## Exposure.TypeEnvironmental, unspecified                     0.000278 ***
-## Exposure.TypeFilmcoating                                    0.996217    
-## Exposure.TypeFoliar spray                                   3.14e-11 ***
-## Exposure.TypeFood                                           0.317121    
-## Exposure.TypeGround granular                                0.945227    
-## Exposure.TypeGround spray                                   1.15e-06 ***
-## Exposure.TypeHand spray                                     3.41e-09 ***
-## Exposure.TypeImmersion                                      0.996697    
-## Exposure.TypeMisted                                         0.989301    
-## Exposure.TypeMultiple routes within environmental exposures 0.994651    
-## Exposure.TypePresent in soil                                0.993448    
-## Exposure.TypeSpray                                          2.16e-08 ***
-## Exposure.TypeTopical, general                               0.018538 *  
-## Exposure.TypeWatered                                        0.986897    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 3233.2  on 2528  degrees of freedom
-## Residual deviance: 2540.4  on 2510  degrees of freedom
-## AIC: 2578.4
-## 
-## Number of Fisher Scoring iterations: 16
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#Dipped or soaked, Direct application, Environmental{-} unspecified, Foliar spray, Ground spray, Hand spray, Spray, and Topical, general are all significant }
-\CommentTok{\#Plenty of samples for non{-}bees {-} correlations  }
-\CommentTok{\#Conclusion: Spray could be an effective anthropogenic exposure technique to eliminate pests and preserve bees. Direct application like topical techniques should be avoided as they significantly harm all species. There appears to be environmental exposure types that can promote desired effect as well.}
-
-\CommentTok{\#Pseudo R2}
- \FunctionTok{pR2}\NormalTok{(logit2)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## fitting null model for pseudo-r2
-\end{verbatim}
-
-\begin{verbatim}
-##           llh       llhNull            G2      McFadden          r2ML 
-## -1270.1751454 -1616.5870098   692.8237287     0.2142859     0.2396312 
-##          r2CU 
-##     0.3321160
-\end{verbatim}
+\textbf{Results of Statistical Analysis on Exposure Type and Mortality
+on Non-bees}
 
 \begin{longtable}[]{@{}ll@{}}
 \toprule
@@ -681,65 +439,8 @@ Topical, general & 0.018538 \\
 cause mortality for bees vs.~non-bee
 insects?}\label{question-2-are-there-chemicals-that-are-more-likely-to-cause-mortality-for-bees-vs.-non-bee-insects}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#Which chemical types have a significant effect (mortality) on bee species?}
-
-\NormalTok{logit3 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(Mortality }\SpecialCharTok{\textasciitilde{}}\NormalTok{ CAS.Number, }\AttributeTok{data =}\NormalTok{ BeeMortalityExposureType, }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
-\FunctionTok{summary}\NormalTok{(logit3)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## Call:
-## glm(formula = Mortality ~ CAS.Number, family = "binomial", data = BeeMortalityExposureType)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.5453  -0.7585  -0.7585   1.2286   1.7080  
-## 
-## Coefficients:
-##                     Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)           0.8329     0.3788   2.199 0.027885 *  
-## CAS.Number135410207  -2.0268     0.4568  -4.437 9.10e-06 ***
-## CAS.Number138261413  -1.9315     0.3879  -4.979 6.39e-07 ***
-## CAS.Number150824478  11.7332   324.7439   0.036 0.971178    
-## CAS.Number153719234  -0.9526     0.3993  -2.385 0.017062 *  
-## CAS.Number165252700  -1.4276     0.4904  -2.911 0.003599 ** 
-## CAS.Number210880925  -1.5066     0.4035  -3.734 0.000189 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 1757.6  on 1406  degrees of freedom
-## Residual deviance: 1689.6  on 1400  degrees of freedom
-## AIC: 1703.6
-## 
-## Number of Fisher Scoring iterations: 11
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
- \CommentTok{\#Need more data on 58842209 105843365 and 58842209, 150824478}
- \CommentTok{\# Every other chemical is statistically significant {-} 111988499 135410207 138261413  153719234 165252700 210880925 }
-
-\CommentTok{\#Pseudo R2}
- \FunctionTok{pR2}\NormalTok{(logit3)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## fitting null model for pseudo-r2
-\end{verbatim}
-
-\begin{verbatim}
-##           llh       llhNull            G2      McFadden          r2ML 
-## -844.79573614 -878.77992574   67.96837921    0.03867201    0.04715907 
-##          r2CU 
-##    0.06611832
-\end{verbatim}
+\textbf{Results of Statistical Analysis on Chemical Types and Mortality
+on Bees}
 
 \begin{longtable}[]{@{}ll@{}}
 \toprule
@@ -756,65 +457,8 @@ Chemical Effect on Bees & Pr(\textgreater{} \\
 
 *Pseudo McFadden Score = 0.03867201
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#Which exposure types have a significant effect (mortality) on non bee species?}
-
-\NormalTok{logit4 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(Mortality }\SpecialCharTok{\textasciitilde{}}\NormalTok{ CAS.Number, }\AttributeTok{data =}\NormalTok{ NonBeeMortalityExposure, }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
-\FunctionTok{summary}\NormalTok{(logit4)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## Call:
-## glm(formula = Mortality ~ CAS.Number, family = "binomial", data = NonBeeMortalityExposure)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.5928  -0.8379  -0.8379   1.2907   1.9027  
-## 
-## Coefficients:
-##                       Estimate Std. Error z value Pr(>|z|)
-## (Intercept)          1.557e+01  4.602e+02   0.034    0.973
-## CAS.Number105843365  1.448e-09  6.509e+02   0.000    1.000
-## CAS.Number111988499 -1.507e+01  4.602e+02  -0.033    0.974
-## CAS.Number135410207 -1.583e+01  4.602e+02  -0.034    0.973
-## CAS.Number138261413 -1.643e+01  4.602e+02  -0.036    0.972
-## CAS.Number150824478 -1.463e+01  4.602e+02  -0.032    0.975
-## CAS.Number153719234 -1.615e+01  4.602e+02  -0.035    0.972
-## CAS.Number165252700 -1.580e+01  4.602e+02  -0.034    0.973
-## CAS.Number210880925 -1.720e+01  4.602e+02  -0.037    0.970
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 3233.2  on 2528  degrees of freedom
-## Residual deviance: 3091.8  on 2520  degrees of freedom
-## AIC: 3109.8
-## 
-## Number of Fisher Scoring iterations: 14
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#There is no chemical that is effective at eliminating all non{-}bee species. }
-\CommentTok{\#Conclusion {-} exposure mechanism of chemical is a more reliable factor at understanding mortality than chemical itself. Bees do not respond well to any of the adminstered chemicals. Any treatment should focus on using the chemicals in ways that are ineffective at exposing bees and effective at exposing nonbees}
-
-\CommentTok{\#Pseudo R2}
- \FunctionTok{pR2}\NormalTok{(logit4)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## fitting null model for pseudo-r2
-\end{verbatim}
-
-\begin{verbatim}
-##           llh       llhNull            G2      McFadden          r2ML 
-## -1.545888e+03 -1.616587e+03  1.413983e+02  4.373360e-02  5.437649e-02 
-##          r2CU 
-##  7.536291e-02
-\end{verbatim}
+\textbf{Results of Statistical Analysis on Chemical Types and Mortality
+on Non-bees}
 
 \begin{longtable}[]{@{}ll@{}}
 \toprule
@@ -836,7 +480,7 @@ We found that the exposure technique influenced the mortality
 predictiveness of the neonicotinoids on the species in our dataset. Our
 model showed that topical exposure had a significant effect on mortality
 for bee species, but the pseudo R-squared suggests that the model might
-not be a goof fit to the data. Our model for exposure techniques on non
+not be a good fit to the data. Our model for exposure techniques on non
 bee species shows that several exposure techniques significantly
 affected mortality. The pseudo R-squared value of .214 suggests that
 this model is a good fit. Regarding the data on chemical types, our
@@ -854,28 +498,13 @@ bees.
 \hypertarget{appendix}{%
 \section{Appendix}\label{appendix}}
 
-\begin{verbatim}
-## Warning in sqrt(crit * p * (1 - hh)/hh): NaNs produced
-
-## Warning in sqrt(crit * p * (1 - hh)/hh): NaNs produced
-\end{verbatim}
-
 \begin{figure}
 \centering
 \includegraphics{UpdatedwithModel_files/figure-latex/unnamed-chunk-8-1.pdf}
 \caption{Residual Plot for Bee Mortality by Exposure Type}
 \end{figure}
 
-\begin{verbatim}
-## Warning: not plotting observations with leverage one:
-##   1437
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in sqrt(crit * p * (1 - hh)/hh): NaNs produced
-
-## Warning in sqrt(crit * p * (1 - hh)/hh): NaNs produced
-\end{verbatim}
+\newpage
 
 \begin{figure}
 \centering
@@ -883,16 +512,15 @@ bees.
 \caption{Residual Plot for Non-Bee Mortality by Exposure Type}
 \end{figure}
 
-\begin{verbatim}
-## Warning: not plotting observations with leverage one:
-##   880
-\end{verbatim}
+\newpage
 
 \begin{figure}
 \centering
 \includegraphics{UpdatedwithModel_files/figure-latex/unnamed-chunk-10-1.pdf}
 \caption{Residual Plot for Bee Mortality by Chemical Type}
 \end{figure}
+
+\newpage
 
 \begin{figure}
 \centering

@@ -39,7 +39,7 @@ library(forcats)
 # Set your ggplot theme
 mytheme <- theme_classic() +
   theme(axis.text = element_text(color = "black"), 
-        legend.position = "top")
+        legend.position = "left")
 theme_set(mytheme)
 
 # Load your datasets 
@@ -119,10 +119,15 @@ Data Source | EPA ECOTOX Knowledgebase
 ------- | ---------
 Retrieved From | https://cfpub.epa.gov/ecotox/help.cfm
 ------- | ---------
-Date Range | 1982-2019
+Date Range | 1982-2019 
 
-```{r echo=FALSE, tab.cap = "Data Summary"}
-kable(sapply(Processed1_Filter, class))
+
+```{r echo=FALSE, tab.cap = "Summary Data"}
+
+
+kable(sapply(Processed1_Filter, class), caption = "Summary Data")
+
+
 ```
 
 \newpage
@@ -227,13 +232,13 @@ We ran GLMs to analyze our categorical data. Using the if/else statement to crea
 
 The ‘logit’ model evaluated the effect of exposure type on mortality on bee species. The results of this model showed that topical exposure had a significant effect on bee mortality (p=.009). For every one unit change in topical, the odds of mortality increase by 1.1787. In comparison to non-bee species, ‘logit2’ had various exposure types that had a significant effect on mortality. The significant exposure types included dipped or soaked, direct application, drinking water, environmental (unspecified), foliar spray, ground spray, hand spray, spray, and topical. 
 
-The ‘logit3’ and ‘logit4’ models evaluated which chemical types have a lethal effect on bee and non bee species. The results of ‘logit3’ showed that nearly all chemical types with data had a significant effect on bees. However, the only chemical that was not significant (150824478) only had one entry. The results of ‘logit4’ showed that no chemical had a significant effect on non-bee species. The results of the four models are summarized in Table 1. 
+The ‘logit3’ and ‘logit4’ models evaluated which chemical types have a lethal effect on bee and non bee species. The results of ‘logit3’ showed that nearly all chemical types with data had a significant effect on bees. However, the only chemical that was not significant (150824478) only had one entry. The results of ‘logit4’ showed that no chemical had a significant effect on non-bee species. The results of the four models are summarized in the tables below. 
 
-We evaluated the goodness-of-fit by finding the McFadden pseudo R-squared  for each model. The model for exposure type and non-bee mortality (‘logit2’) had a good fit with a McFadden pseudo R-squared value of .214. However, the rest of the models had very low pseudo R-squared values. As a result, these models may not provide the most predictive information. 
+We evaluated the goodness-of-fit by finding the McFadden pseudo R-squared for each model. The model for exposure type and non-bee mortality (‘logit2’) had a good fit with a McFadden pseudo R-squared value of .214. However, the rest of the models had very low pseudo R-squared values. As a result, these models may not provide the most predictive information. 
 
 ## Question 1: Is there an exposure type that is more likely to cause mortality for bees vs. non-bee insects?
 
-```{r}
+```{r include=FALSE}
 
 #Which exposure types have a significant effect (mortality) on bee species?
 BeeMortalityExposureType$Mortality <- ifelse(BeeMortalityExposureType$Effect=="Mortality", 1, 0) 
@@ -252,7 +257,7 @@ summary(logit)
  pR2(logit)
 
 ```
-
+**Results of Statistical Analysis on Exposure Type and Mortality on Bees**
 
 Exposure Effect on Bees |Pr(>|z|) 
 ------- | ---------
@@ -260,7 +265,7 @@ Topical, general | 0.009 **
 
 *Pseudo McFadden Score = 0.07748671 
 
-```{r}
+```{r include=FALSE}
 
 #Which exposure types have a significant effect (mortality) on non bee species?
 
@@ -281,6 +286,7 @@ summary(logit2)
 
 
 ```
+**Results of Statistical Analysis on Exposure Type and Mortality on Non-bees**
 
  Non-Bee Exposure Type | Pr(>|z|)
   ------- | ---------
@@ -298,7 +304,8 @@ Topical, general                |                   0.018538
 
 
 ## Question 2: Are there chemicals that are more likely to cause mortality for bees vs. non-bee insects?
-```{r}
+```{r include=FALSE}
+
 #Which chemical types have a significant effect (mortality) on bee species?
 
 logit3 <- glm(Mortality ~ CAS.Number, data = BeeMortalityExposureType, family = "binomial")
@@ -310,7 +317,7 @@ summary(logit3)
 #Pseudo R2
  pR2(logit3)
 ```
-
+**Results of Statistical Analysis on Chemical Types and Mortality on Bees**
 
 Chemical Effect on Bees  |    Pr(>|z|)
 ------- | ---------
@@ -323,7 +330,7 @@ Chemical Effect on Bees  |    Pr(>|z|)
 *Pseudo McFadden Score = 0.03867201
 
 
-```{r}
+```{r include=FALSE}
 #Which exposure types have a significant effect (mortality) on non bee species?
 
 logit4 <- glm(Mortality ~ CAS.Number, data = NonBeeMortalityExposure, family = "binomial")
@@ -335,6 +342,7 @@ summary(logit4)
 #Pseudo R2
  pR2(logit4)
 ```
+**Results of Statistical Analysis on Chemical Types and Mortality on Non-bees**
 
 Chemical Effect on Non-Bees |Pr(>|z|)
 ------- | ---------
@@ -346,7 +354,7 @@ Chemical | None
 
 # Summary and Conclusions
 
-We found that the exposure technique influenced the mortality predictiveness of the neonicotinoids on the species in our dataset. Our model showed that topical exposure had a significant effect on mortality for bee species, but the pseudo R-squared suggests that the model might not be a goof fit to the data. Our model for exposure techniques on non bee species shows that several exposure techniques significantly affected mortality.  The pseudo R-squared value of .214 suggests that this model is a good fit. Regarding the data on chemical types, our models showed that 
+We found that the exposure technique influenced the mortality predictiveness of the neonicotinoids on the species in our dataset. Our model showed that topical exposure had a significant effect on mortality for bee species, but the pseudo R-squared suggests that the model might not be a good fit to the data. Our model for exposure techniques on non bee species shows that several exposure techniques significantly affected mortality.  The pseudo R-squared value of .214 suggests that this model is a good fit. Regarding the data on chemical types, our models showed that 
 no chemical had a significant effect on non-bee species mortality. For bee species, we did find several chemical types that had a significant effect on mortality, but this model also had a low pseudo R-squared and may not be the most predictive for our data. Given our data on exposure types and their effects on bee and non-bee mortality, we suggest that spray exposure techniques could maximize the effectiveness on reducing unwanted pests while preventing mortality on bees. 
 
 
@@ -358,22 +366,35 @@ no chemical had a significant effect on non-bee species mortality. For bee speci
 \newpage
 
 # Appendix
-```{r echo=FALSE, fig.cap = "Residual Plot for Bee Mortality by Exposure Type"}
+```{r echo=FALSE, fig.cap = "Residual Plot for Bee Mortality by Exposure Type", warning=FALSE}
 par(mfrow=c(2,2))
 plot(logit)
+
 ```
 
-```{r echo=FALSE, fig.cap = "Residual Plot for Non-Bee Mortality by Exposure Type"}
+
+\newpage
+
+
+```{r echo=FALSE, fig.cap = "Residual Plot for Non-Bee Mortality by Exposure Type", warning=FALSE}
 par(mfrow=c(2,2))
 plot(logit2)
 ```
 
-```{r echo=FALSE, fig.cap = "Residual Plot for Bee Mortality by Chemical Type"}
+
+\newpage
+
+
+```{r echo=FALSE, fig.cap = "Residual Plot for Bee Mortality by Chemical Type", warning=FALSE}
 par(mfrow=c(2,2))
 plot(logit3)
 ```
 
-```{r echo=FALSE, fig.cap = "Residual Plot for Non-Bee Mortality by Chemical Type"}
+
+\newpage
+
+
+```{r echo=FALSE, fig.cap = "Residual Plot for Non-Bee Mortality by Chemical Type", warning=FALSE}
 par(mfrow=c(2,2))
 plot(logit4)
 ```
