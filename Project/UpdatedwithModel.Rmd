@@ -73,7 +73,7 @@ In the wrangling process, we selected the relevant information to our topic.
 This includes the chemical type, chemical number, insect species, lifestage and age of the species, 
 exposure type, the effect of the exposure and the measurement of the exposure. An example of an exposure type is giving food to a bee. An example of an effect is mortality, and the measurement is a more detailed analysis of the effect. 
 
-We converted all these selected categorical variables to factors to prep for analysis. In the next step, we processed two data frames – oall bee species and all non-bee species. The split resulted in 2529 non-bee observations and 1407 bee observations. Lastly we added a mortality column using an ifelse statement. We did this to run a binomial glm in our analysis. We coded mortality as 1 and everything else as 0. 
+We converted all these selected categorical variables to factors to prep for analysis. In the next step, we processed two data frames – all bee species and all non-bee species. The split resulted in 2529 non-bee observations and 1407 bee observations. Lastly we added a mortality column using an ifelse statement. We did this to run a binomial glm in our analysis. We coded mortality as 1 and everything else as 0. 
 
 
 ```{r echo=FALSE}
@@ -343,6 +343,14 @@ Chemical | None
 \newpage
 
 # Summary and Conclusions
+
+We found that the exposure technique influenced the mortality predictiveness of the neonicotinoids on the species in our dataset. Our model showed that topical exposure had a significant effect on mortality for bee species, but the pseudo R-squared suggests that the model might not be a goof fit to the data. Our model for exposure techniques on non bee species shows that several exposure techniques significantly affected mortality.  The pseudo R-squared value of .214 suggests that this model is a good fit. Regarding the data on chemical types, our models showed that 
+no chemical had a significant effect on non-bee species mortality. For bee species, we did find several chemical types that had a significant effect on mortality, but this model also had a low pseudo R-squared and may not be the most predictive for our data. Given our data on exposure types and their effects on bee and non-bee mortality, we suggest that spray exposure techniques could maximize the effectiveness on reducing unwanted pests while preventing mortality on bees. 
+
+
+
+
+
 
 
 \newpage
