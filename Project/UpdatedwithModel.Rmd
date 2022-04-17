@@ -247,6 +247,7 @@ Exposure Effect on Bees |Pr(>|z|)
 ------- | ---------
 Topical, general | 0.009 **
 
+*Pseudo McFadden Score = 0.07748671 
 
 ```{r}
 
