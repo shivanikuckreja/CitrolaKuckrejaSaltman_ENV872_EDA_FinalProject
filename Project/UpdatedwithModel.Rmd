@@ -116,9 +116,12 @@ Data Source | EPA ECOTOX Knowledgebase
 ------- | ---------
 Retrieved From | https://cfpub.epa.gov/ecotox/help.cfm
 ------- | ---------
-Variables Used | Chemical Number, Chemical Name, Species Common Name, Organism Lifestage, Organism Age, Exposure Type, Effect, Effect Measurement
-------- | ---------
 Date Range | 1982-2019
+
+```{r}
+kable(sapply(Processed1_Filter, class))
+```
+
 \newpage
 
 # Exploratory Analysis 
