@@ -117,13 +117,15 @@ kable(summary(Mortality$Species.Common.Name), caption = "Species List - Sample N
 
 
  GGPlot_Bee_Mortality_Exposure <- ggplot(BeeMortalityExposureType) +
-   aes(x = reorder(Exposure.Type, +Effect.Measurement), y = Effect.Measurement) +
+   aes(x = Exposure.Type) +
    geom_bar(fill = "light blue") +
    xlab("Exposure Type") +
    ylab("Mortality Count") +
    theme(axis.text.x = element_text(angle = 90))
  print(GGPlot_Bee_Mortality_Exposure)
  
+ 
+    #aes(x = reorder(Exposure.Type, -Effect.Measurement), y= Effect.Measurement) 
 ```
 
 ```{r echo=FALSE, fig.cap = "Non-bee Mortality by Exposure Type"}
